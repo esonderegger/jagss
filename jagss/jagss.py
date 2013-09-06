@@ -31,7 +31,7 @@ def populateSiteData(location):
         for file in files:
             if os.path.splitext(file)[1] == '.md':
                 rawFile = open(os.path.join(root, file)).read()
-                yamlAndMarkdown = rawFile.split('---\n')
+                yamlAndMarkdown = rawFile.split('-*-*-*-\n')
                 yamlData = yaml.load(yamlAndMarkdown[0])
                 htmlData = markdown2.markdown(yamlAndMarkdown[1])
                 yamlData['url'] = folderID + '/'
@@ -45,7 +45,7 @@ def renderMarkdownFile(sourceDir, file, newDir, templatesDir, siteData):
     newFilename = os.path.splitext(file)[0] + '.html'
     newPath = os.path.join(newDir, newFilename)
     rawFile = open(os.path.join(sourceDir, file)).read()
-    yamlAndMarkdown = rawFile.split('-*-*-\n')
+    yamlAndMarkdown = rawFile.split('-*-*-*-\n')
     if len(yamlAndMarkdown) == 2:
         yamlData = yaml.load(yamlAndMarkdown[0])
         htmlData = markdown2.markdown(yamlAndMarkdown[1])

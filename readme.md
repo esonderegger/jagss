@@ -40,7 +40,7 @@ Markdown files can include metadata in the yaml format at the beginning of the f
 
 To separate the yaml content from the markdown content, include a line with this text:
 
-    -*-*-
+    -*-*-*-
 
 Each Jinja2 template file is rendered with a magic variarble called 'site'.
 
