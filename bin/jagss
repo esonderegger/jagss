@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+
+import argparse
+import yaml
+import jagss
+import os
+import SimpleHTTPServer
+import SocketServer
+import threading
+import time
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+
+class jagssServerThread(threading.Thread):
+    def __init__(self, port, outputDir):
+        threading.Thread.__init__(self)
+        self.PORT = port
+        self.outputDir = outputDir
+        self.Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+        self.httpd = SocketServer.TCPServer(("", self.PORT), self.Handler)
+
+    def run(self):
+        os.chdir(self.outputDir)
+        print "serving at port", self.PORT
+        self.httpd.serve_forever()
+
+    def shutdown(self):
+        self.httpd.shutdown()
+
+
+class jagss_handler(FileSystemEventHandler):
+    def __init__(self, configDict):
+        FileSystemEventHandler.__init__(self)
+        self.configDict = configDict
+
+    def on_any_event(self, event):
+        print 'rebuilding static site...'
+        jagss.buildStaticSite(self.configDict['sourceDir'],
+                              self.configDict['outputDir'],
+                              self.configDict['templatesDir'],
+                              self.configDict['lessFile'])
+        print 'rebuild complete.\n'
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", help="specify config file")
+    parser.add_argument("--source", help="specify source directory")
+    parser.add_argument("--output", help="specify output directory")
+    parser.add_argument("--templates", help="specify template directory")
+    parser.add_argument("--less", help="specify less css file")
+    parser.add_argument("--server", help="run a server for testing on Port #")
+    args = parser.parse_args()
+    if args.config:
+        configDict = yaml.load(file(args.config, 'r'))
+    elif args.source and args.output:
+        configDict = {'sourceDir': args.source, 'outputDir': args.output}
+        configDict['templatesDir'] = args.templates
+        configDict['lessFile'] = args.less
+    else:
+        configDict = {'error': 'input/output directories not specified.'}
+    jagss.buildStaticSite(configDict['sourceDir'], configDict['outputDir'],
+                          configDict['templatesDir'], configDict['lessFile'])
+    if args.server:
+        event_handler = jagss_handler(configDict)
+        observer = Observer()
+        masterDir = os.path.dirname(configDict['sourceDir'])
+        observer.schedule(event_handler, path=masterDir, recursive=True)
+        portNum = int(args.server)
+        usmbHttpServer = jagssServerThread(portNum, configDict['outputDir'])
+        observer.start()
+        usmbHttpServer.start()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            observer.stop()
+            usmbHttpServer.shutdown()
+            print 'stopping testing server.\n'
+        observer.join()
