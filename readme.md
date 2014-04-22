@@ -20,7 +20,8 @@ If you want to make changes to how jagss works:
 
     git clone git://github.com/esonderegger/jagss.git
     cd jagss
-    mkvirtualenv --no-site-packages jagss
+    virtualenv jagss_env
+    . jagss_env/bin/activate
     python setup.py develop
 
 ### Dependencies
@@ -34,9 +35,10 @@ lessc. The easiest way to do that is with the Node Package Manager (npm).
 
 ## Usage
 
-Jagss is called from the command line. First, to build a jagss project in the current
-directory, type:
+Jagss is called from the command line. First, to build a new jagss project, type:
 
+    mkdir projectname
+    cd projectname
     jagss --create less
 
 This will create a less folder and a file named folder-name.less inside it, which will
