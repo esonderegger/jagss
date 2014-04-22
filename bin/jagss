@@ -6,10 +6,13 @@ import jagss
 import os
 import SimpleHTTPServer
 import SocketServer
+import subprocess
 import threading
 import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from jagss.sftpsync import Sftp
+from jagss.createSite import createNewSite
 
 
 class jagssServerThread(threading.Thread):
@@ -22,7 +25,7 @@ class jagssServerThread(threading.Thread):
 
     def run(self):
         os.chdir(self.outputDir)
-        print "serving at port", self.PORT
+        print 'serving at http://localhost:' + str(self.PORT)
         self.httpd.serve_forever()
 
     def shutdown(self):
@@ -43,25 +46,56 @@ class jagss_handler(FileSystemEventHandler):
         print 'rebuild complete.\n'
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", help="specify config file")
-    parser.add_argument("--source", help="specify source directory")
-    parser.add_argument("--output", help="specify output directory")
-    parser.add_argument("--templates", help="specify template directory")
-    parser.add_argument("--less", help="specify less css file")
-    parser.add_argument("--server", help="run a server for testing on Port #")
+    createhelp = "Create new project in current directory. "
+    createhelp += "Options are: 'css' and 'less'. ('sass' coming soon)"
+    parser.add_argument("--create", metavar='CSS_PROCESSOR', help=createhelp)
+    confighelp = "Specify config file. If this option is not specified, "
+    confighelp += "jagss will look in the current directory for one."
+    parser.add_argument("--config", metavar='/path/to/config.yaml',
+                        help=confighelp)
+    parser.add_argument("--server", metavar='PORT',
+                        help="run a server for testing on Port #")
+    deployhelp = "Sync generated html with external server. "
+    deployhelp += "Options are 'sftp' and 's3'."
+    parser.add_argument("--deploy", metavar='TYPE',
+                        help=deployhelp)
     args = parser.parse_args()
+    if args.create:
+        createNewSite(os.getcwd(), args.create)
     if args.config:
         configDict = yaml.load(file(args.config, 'r'))
-    elif args.source and args.output:
-        configDict = {'sourceDir': args.source, 'outputDir': args.output}
-        configDict['templatesDir'] = args.templates
-        configDict['lessFile'] = args.less
+    elif 'config.yaml' in os.listdir(os.getcwd()):
+        configFile = file(os.path.join(os.getcwd(), 'config.yaml'), 'r')
+        configDict = yaml.load(configFile)
     else:
-        configDict = {'error': 'input/output directories not specified.'}
-    jagss.buildStaticSite(configDict['sourceDir'], configDict['outputDir'],
-                          configDict['templatesDir'], configDict['lessFile'])
+        configDict = False
+    if configDict:
+        jagss.buildStaticSite(configDict['sourceDir'],
+                              configDict['outputDir'],
+                              configDict['templatesDir'],
+                              configDict['lessFile'])
+    else:
+        print 'ERROR: Could not find config.yaml file.'
+        return False
+    if args.deploy:
+        if args.deploy == 'sftp':
+            print 'deploying to sftp site: ' + configDict['sftpAddress']
+            sftpsite = Sftp(configDict['sftpAddress'],
+                            configDict['sftpUsername'],
+                            configDict['sftpPassword'])
+            sftpsite.sync(configDict['outputDir'], configDict['sftpDirectory'],
+                          download=False, delete=True)
+        if args.deploy == 's3':
+            print 'deplying to s3 bucket: ' + configDict['s3BucketName']
+            commandList = ['boto-rsync', '-a', configDict['s3AccessKey'],
+                           '-s', configDict['s3SecretKey'], '--delete',
+                           configDict['outputDir'] + '/',
+                           's3://' + configDict['s3BucketName'] + '/']
+            subprocess.call(commandList)
+        if args.deploy == 'git':
+            print 'deploying via git not implemented yet'
     if args.server:
         event_handler = jagss_handler(configDict)
         observer = Observer()
@@ -79,3 +113,6 @@ if __name__ == "__main__":
             usmbHttpServer.shutdown()
             print 'stopping testing server.\n'
         observer.join()
+
+if __name__ == "__main__":
+    main()

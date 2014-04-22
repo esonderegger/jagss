@@ -9,7 +9,9 @@ requirements = [
     'jinja2>=2.0',
     'markdown2>=2.0',
     'pyyaml>=3.10',
-    'watchdog>=0.6'
+    'watchdog>=0.6',
+    'paramiko>=1.12.0',
+    'boto_rsync>=0.8.1'
 ]
 
 
