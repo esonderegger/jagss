@@ -38,12 +38,13 @@ class jagss_handler(FileSystemEventHandler):
         self.configDict = configDict
 
     def on_any_event(self, event):
-        print 'rebuilding static site...'
-        jagss.buildStaticSite(self.configDict['sourceDir'],
-                              self.configDict['outputDir'],
-                              self.configDict['templatesDir'],
-                              self.configDict['lessFile'])
-        print 'rebuild complete.\n'
+        if not event.src_path.startswith(self.configDict['outputDir']):
+            print 'rebuilding static site...'
+            jagss.buildStaticSite(self.configDict['sourceDir'],
+                                  self.configDict['outputDir'],
+                                  self.configDict['templatesDir'],
+                                  self.configDict['lessFile'])
+            print 'rebuild complete.\n'
 
 
 def main():
