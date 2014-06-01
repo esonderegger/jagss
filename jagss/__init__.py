@@ -29,7 +29,7 @@ def populateSiteData(location):
                 mdData = dictFromMarkdown(os.path.join(root, f), folderID)
                 siteData[folderID].append(mdData)
             if os.path.splitext(f)[1] == '.yaml':
-                ymlData = yaml.load(open(os.path.join(root, f)).read())
+                ymlData = dictFromYaml(os.path.join(root, f), folderID)
                 siteData[folderID].append(ymlData)
         for folder in dirs:
             yamlData = {'relativePath': folderID}
@@ -48,12 +48,25 @@ def dictFromMarkdown(markdownPath, folderID):
         yamlData['html'] = htmlData
         yamlData['type'] = 'yaml+markdown'
     else:
-        yamlData = {'relativePath': folderID}
-        yamlData['html'] = markdown2.markdown(rawFile)
+        # yamlData = {'relativePath': folderID}
+        yamlData = {'html': markdown2.markdown(rawFile)}
+        # yamlData['html'] = markdown2.markdown(rawFile)
         yamlData['type'] = 'markdown'
     yamlData['relativePath'] = folderID
     yamlData['url'] = folderID + '/'
-    yamlData['url'] += os.path.splitext(markdownPath)[0] + '.html'
+    filename = os.path.basename(markdownPath)
+    yamlData['url'] += os.path.splitext(filename)[0] + '.html'
+    return yamlData
+
+
+def dictFromYaml(yamlPath, folderID):
+    yamlData = yaml.load(open(yamlPath).read())
+    yamlData['relativePath'] = folderID
+    yamlData['type'] = 'yaml'
+    if 'template' in yamlData:
+        yamlData['url'] = folderID + '/'
+        filename = os.path.basename(yamlPath)
+        yamlData['url'] += os.path.splitext(filename)[0] + '.html'
     return yamlData
 
 
@@ -71,6 +84,23 @@ def renderMarkdownFile(sourceDir, filename, newDir, templatesDir, siteData,
     else:
         with open(newPath, 'w') as f:
             f.write(mdData['html'].encode('utf-8'))
+    return newPath
+
+
+def renderYamlFile(sourceDir, filename, newDir, templatesDir, siteData,
+                   folderID):
+    newFilename = os.path.splitext(filename)[0] + '.html'
+    newPath = os.path.join(newDir, newFilename)
+    # yamlData = yaml.load(open(os.path.join(sourceDir, filename)).read())
+    yamlData = dictFromYaml(os.path.join(sourceDir, filename), folderID)
+    if 'template' in yamlData:
+        jinjaEnv = Environment(loader=FileSystemLoader([templatesDir]))
+        template = jinjaEnv.get_template(yamlData['template'])
+        output = template.render(page=yamlData, site=siteData)
+        with open(newPath, 'w') as f:
+            f.write(output.encode('utf-8'))
+    else:
+        return False
     return newPath
 
 
@@ -100,6 +130,9 @@ def renderSiteFile(sourceDir, filename, outputDir, templatesDir, siteData,
     elif extension == '.md':
         newPath = renderMarkdownFile(sourceDir, filename, newDir,
                                      templatesDir, siteData, folderID)
+    elif extension == '.yaml':
+        newPath = renderYamlFile(sourceDir, filename, newDir,
+                                 templatesDir, siteData, folderID)
     else:
         newPath = os.path.join(newDir, filename)
         shutil.copy2(currentPath, newDir)
