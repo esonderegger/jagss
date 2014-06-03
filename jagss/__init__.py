@@ -40,17 +40,17 @@ def populateSiteData(location):
 
 
 def dictFromMarkdown(markdownPath, folderID):
+    separator = '-*-*-*-\n'
     rawFile = open(markdownPath).read()
-    if '-*-*-*-\n' in rawFile:
-        yamlAndMarkdown = rawFile.split('-*-*-*-\n')
-        yamlData = yaml.load(yamlAndMarkdown[0])
-        htmlData = markdown2.markdown(yamlAndMarkdown[1])
+    separatorIndex = rawFile.find(separator)
+    if separatorIndex > -1:
+        yamlData = yaml.load(rawFile[:separatorIndex])
+        mdData = rawFile[separatorIndex + len(separator):]
+        htmlData = markdown2.markdown(mdData)
         yamlData['html'] = htmlData
         yamlData['type'] = 'yaml+markdown'
     else:
-        # yamlData = {'relativePath': folderID}
         yamlData = {'html': markdown2.markdown(rawFile)}
-        # yamlData['html'] = markdown2.markdown(rawFile)
         yamlData['type'] = 'markdown'
     yamlData['relativePath'] = folderID
     yamlData['url'] = folderID + '/'
