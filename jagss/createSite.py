@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import os
 
 
@@ -16,6 +17,10 @@ def createNewSite(location, cssType):
         lessDirPath = os.path.join(location, 'less')
         cssFilePath = os.path.join(lessDirPath, siteName + '.less')
         dirsToCreate.append(lessDirPath)
+    elif cssType == 'sass':
+        sassDirPath = os.path.join(location, 'sass')
+        cssFilePath = os.path.join(sassDirPath, siteName + '.scss')
+        dirsToCreate.append(sassDirPath)
     else:
         cssDirPath = os.path.join(sitePath, 'css')
         cssFilePath = os.path.join(cssDirPath, siteName + '.css')
@@ -43,9 +48,16 @@ def createConfigFile(cwd, cssType):
         lessPath = os.path.join(cwd, 'less')
         conf += 'lessFile: ' + os.path.join(lessPath, siteName + '.less')
         conf += '\n'
+        conf += 'sassFile: False\n'
+    elif cssType == 'sass':
+        conf += 'lessFile: False\n'
+        sassPath = os.path.join(cwd, 'sass')
+        conf += 'sassFile: ' + os.path.join(sassPath, siteName + '.scss')
+        conf += '\n'
     else:
         conf += 'lessFile: False\n'
-    conf += '\n# deployType can be sFTP or s3\n'
+        conf += 'sassFile: False\n'
+    conf += '\n# deployment credentials go here:\n'
     conf += 'sftpAddress: none\n'
     conf += 'sftpUsername: none\n'
     conf += 'sftpPassword: none\n'
@@ -64,7 +76,7 @@ body {
     width: 600px;
     margin: 150px auto;
     font-family: sans-serif;
-    background-color: #222;
+    background-color: #008209;
     color: #eee;
 }
 """

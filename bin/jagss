@@ -43,7 +43,8 @@ class jagss_handler(FileSystemEventHandler):
             jagss.buildStaticSite(self.configDict['sourceDir'],
                                   self.configDict['outputDir'],
                                   self.configDict['templatesDir'],
-                                  self.configDict['lessFile'])
+                                  self.configDict['lessFile'],
+                                  self.configDict['sassFile'])
             print 'rebuild complete.\n'
 
 
@@ -76,7 +77,8 @@ def main():
         jagss.buildStaticSite(configDict['sourceDir'],
                               configDict['outputDir'],
                               configDict['templatesDir'],
-                              configDict['lessFile'])
+                              configDict['lessFile'],
+                              configDict['sassFile'])
     else:
         print 'ERROR: Could not find config.yaml file.'
         return False

@@ -91,7 +91,6 @@ def renderYamlFile(sourceDir, filename, newDir, templatesDir, siteData,
                    folderID):
     newFilename = os.path.splitext(filename)[0] + '.html'
     newPath = os.path.join(newDir, newFilename)
-    # yamlData = yaml.load(open(os.path.join(sourceDir, filename)).read())
     yamlData = dictFromYaml(os.path.join(sourceDir, filename), folderID)
     if 'template' in yamlData:
         jinjaEnv = Environment(loader=FileSystemLoader([templatesDir]))
@@ -151,6 +150,18 @@ def renderLessFile(lessFile, outputDir):
     return outputFile
 
 
+def renderSassFile(sassFile, outputDir):
+    basename = os.path.basename(sassFile)
+    cssDir = os.path.join(outputDir, 'css')
+    if not os.path.exists(cssDir):
+        os.makedirs(cssDir)
+    cssFile = os.path.splitext(basename)[0] + '.css'
+    outputFile = os.path.join(cssDir, cssFile)
+    subCall = ['sass', sassFile, outputFile]
+    subprocess.call(subCall)
+    return outputFile
+
+
 def deleteFolderContents(folder_path):
     for file_object in os.listdir(folder_path):
         file_object_path = os.path.join(folder_path, file_object)
@@ -161,7 +172,7 @@ def deleteFolderContents(folder_path):
 
 
 def buildStaticSite(sourceDir, outputDir, templatesDir=False, lessFile=False,
-                    printSiteData=False):
+                    sassFile=False, printSiteData=False):
     deleteFolderContents(outputDir)
     siteData = populateSiteData(sourceDir)
     if printSiteData:
@@ -171,3 +182,5 @@ def buildStaticSite(sourceDir, outputDir, templatesDir=False, lessFile=False,
     renderSiteOuput(sourceDir, outputDir, templatesDir, siteData)
     if lessFile:
         renderLessFile(lessFile, outputDir)
+    if sassFile:
+        renderSassFile(sassFile, outputDir)
