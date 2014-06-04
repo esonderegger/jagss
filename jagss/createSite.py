@@ -71,8 +71,7 @@ def createConfigFile(cwd, cssType):
 
 def createCssFile(cssPath):
     """creates a default css or less file at the specified path."""
-    css = """
-body {
+    css = """body {
     width: 600px;
     margin: 150px auto;
     font-family: sans-serif;
@@ -86,8 +85,7 @@ body {
 
 def createTemplateFile(templatePath, siteName):
     """creates a default jinja2 template at the specified path."""
-    template = """
-<!DOCTYPE html>
+    template = """<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -106,8 +104,7 @@ def createTemplateFile(templatePath, siteName):
 
 def createMarkdownFile(markdownPath):
     """creates a default markdown file at the specified path."""
-    md = """
-template: default.html
+    md = """template: default.html
 title: JAGSS!
 -*-*-*-
 # Welcome to JAGSS!
