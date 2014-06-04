@@ -157,7 +157,7 @@ def renderSassFile(sassFile, outputDir):
         os.makedirs(cssDir)
     cssFile = os.path.splitext(basename)[0] + '.css'
     outputFile = os.path.join(cssDir, cssFile)
-    subCall = ['sass', sassFile, outputFile]
+    subCall = ['sass', '--style', 'compressed', sassFile, outputFile]
     subprocess.call(subCall)
     return outputFile
 
