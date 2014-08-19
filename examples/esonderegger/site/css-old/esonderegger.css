@@ -1,0 +1,38 @@
+body {
+  padding-top: 60px;
+}
+.photoModal {
+  height: 90px;
+}
+.photoCaption {
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 20px;
+}
+.photoClose {
+  height: 20px;
+  line-height: 20px;
+  padding: 0px 20px;
+  text-align: right
+}
+.photoClose a {
+  color: #111;
+}
+.photoPrev {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+.photoNext {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+.photoThumb {
+  width: 172px;
+  height: 172px;
+  display: inline-block;
+}
+.thumbImage {
+  /*box-shadow: 2px 2px 2px #888;*/
+}

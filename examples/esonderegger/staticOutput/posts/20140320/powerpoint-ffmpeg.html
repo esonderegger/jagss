@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Personal web site for Evan Sonderegger">
+        <meta name="author" content="Evan Sonderegger">
+        <link rel="icon" href="/favicon.png">
+        <title>FFMPEG settings for PowerPoint Video Playback - esonderegger</title>
+        <link href="/css/esonderegger.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet'>
+        
+    </head>
+    <body class="textPost">
+        
+
+<div id="ebsNavbarContainer">
+    <div class="container" id="ebsNavbarContainer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/" class="ebsNavbarMainLink">
+                        <span class="letterE">e</span><span class="otherLetters">sonderegger</span>
+                    </a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/about.html" class="ebsNavbarLink">ABOUT</a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/projects.html" class="ebsNavbarLink">PROJECTS</a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/contact.html" class="ebsNavbarLink">CONTACT</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="textPost">
+    <div class="container">
+        <div class="row ebsTextContent">
+            
+            <div class="col-md-3 hidden-xs hidden-sm postDate">20Mar2014</div>
+            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 ebsActualText" data-permalink="/posts/20140320/powerpoint-ffmpeg.html">
+            
+                
+                
+                <h1>FFMPEG settings for PowerPoint Video Playback</h1>
+                
+                
+                <p>If you need to play back video clips in a presentation with the highest possible confidence nothing will go wrong, use <a href="http://dtvideolabs.com/PlaybackPro%20Plus.html">PlaybackPro</a>.</p>
+
+<p>If you can't use PlaybackPro, use Keynote.</p>
+
+<p>If your only option, however, is PowerPoint running on a Windows laptop (as it was for me this week), most combinations of file formats and codecs won't work. This was the ffmpeg command that worked best:</p>
+
+<pre><code>ffmpeg -i input-video.mp4 -q:a 2 -q:v 4 -vcodec wmv2 -acodec wmav2 output-video.avi
+</code></pre>
+
+<p>Note that even though the windows media codecs were used, I had the best luck with putting it all in an avi wrapper. Just for completeness, this was working in PowerPoint 2010 on Windows 7.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/esonderegger.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-10552267-6', 'esonderegger.github.io');
+          ga('send', 'pageview');
+
+        </script>
+        
+        
+        
+    </body>
+</html>
+    

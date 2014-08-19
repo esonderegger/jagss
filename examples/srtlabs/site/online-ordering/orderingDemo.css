@@ -1,0 +1,26 @@
+.cTownItem {
+    height: 200px;
+}
+.itemName {
+    height: 40px;
+    background-color:rgba(0,0,0,0.5);
+}
+.itemName a {
+    color: #eee;
+    font-size: 20px;
+    line-height: 40px;
+    padding-left: 20px;
+}
+.itemSize {
+    background-color: rgba(255,255,255,0.7);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+#checkoutRow {
+    margin-top: 25px;
+}
+#cartData {
+    padding-right: 15px;
+}

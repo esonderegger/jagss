@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% set active = page.active %}
+{% set bodyclass = 'photo' %}
+
+{% block body %}
+{% include 'navbar.html' %}
+{% set photo = page %}
+{% include 'singlePhoto.html' %}
+{% endblock %}

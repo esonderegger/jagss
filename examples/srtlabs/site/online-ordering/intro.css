@@ -1,0 +1,75 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0px;
+}
+h2 {
+    font-size: 48px;
+    font-weight: 400;
+    border-bottom: 1px solid #999;
+}
+li {
+    font-size: 28px;
+    font-weight: 300;
+}
+.bluebg a {
+    color: #bbb;
+}
+.bluebg a:hover {
+    color: #999;
+    text-decoration: none;
+}
+.whitebg a {
+    color: #0084ff;
+}
+.whitebg a:hover {
+    color: #4475ba;
+    text-decoration: none;
+}
+.bluebg {
+    background-color: #0055a4;
+    padding: 200px 0px;
+    color: #f8f8f8;
+}
+.whitebg {
+    background-color: #f8f8f8;
+    padding: 200px 0;
+    color: #0154a4;
+}
+.page {
+    width: 800px;
+    text-align: left;
+    margin: 0px auto;
+}
+#page1 {
+    width: 800px;
+    margin: 0px auto;
+}
+#page1 h1 {
+    font-size: 64px;
+    font-weight: 400;
+    text-align: center;
+}
+#page1 h3 {
+    font-size: 30px;
+    font-weight: 300; 
+    text-align: right;
+}
+#page1 h4 {
+    font-size: 20px;
+    text-align: center;
+    font-weight: 300;
+    padding-top: 20px;
+}
+#compare {
+    width: 550px;
+    padding-left: 250px;
+}
+#compare h3 {
+    font-size: 30px;
+    font-weight: 400;
+    border-bottom: 1px solid #888;
+}
+#compare li {
+    font-size: 20px;
+    font-weight: 300;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SRT Online Ordering Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="SRT Online Ordering Demo">
+        <link rel="icon" href="/favicon.png">
+        <meta name="author" content="Evan Sonderegger">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="orderingDemo.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h1>Order Online</h1>
+                <p class="text-muted">Note: this is a demo of an online ordering system provided by Service Robotics &amp; Technologies.
+                    To place a test order, enter the credit card 4242 4242 4242 4242, with an expiration date in the future
+                    and any three digit number for a verification code.</p>
+            </div>
+            <div class="row"><h2>Drinks</h2></div>
+            <div class="row" id="menuDrinks">
+            </div>
+            <div class="panel row text-right" id="checkoutRow">
+                <span id="cartData" data-total="0" data-numitems="0" data-items="">
+                    <span id="itemCount">0 items</span> - <span id="currentTotal">$0.00
+                    </span> total </span>
+                <button id="checkoutButton" class="btn btn-primary">Check Out</button>
+            </div>
+            <form action="http://ordering.srtlabs.com/charge" method="post"></form>
+        </div>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="https://checkout.stripe.com/v2/checkout.js"></script>
+        <script src="orderingDemo.js"></script>
+    </body>
+</html>

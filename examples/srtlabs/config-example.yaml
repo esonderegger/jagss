@@ -1,0 +1,13 @@
+sourceDir: /Users/evan/Documents/programming/jagss/examples/srtlabs/site
+outputDir: /Users/evan/Documents/programming/jagss/examples/srtlabs/staticOutput
+templatesDir: /Users/evan/Documents/programming/jagss/examples/srtlabs/templates
+lessFile: /Users/evan/Documents/programming/jagss/examples/srtlabs/less/srtstatic.less
+sassFile: False
+
+sftpAddress: none
+sftpUsername: none
+sftpPassword: none
+sftpDirectory: none
+s3AccessKey: <redacted>
+s3SecretKey: <redacted>
+s3BucketName: srtlabs.com

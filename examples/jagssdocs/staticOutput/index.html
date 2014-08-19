@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Evan Sonderegger">
+        <link rel="icon" href="/favicon.png">
+        <title>JAGSS!</title>
+        <link href="/css/jagssdocs.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' />
+    </head>
+    <body>
+        <div class="headerOuter">
+            <div class="headerInner">
+                <h1>JAGSS</h1>
+                <p>Just Another Generator for Static Sites</p>
+            </div>
+        </div>
+        <div class="text-section">
+            <div class="text-content">
+                <p>This is my static site generator. There are many like it, but this one is mine.</p>
+
+<p>Jagss creates html from <a href="http://daringfireball.net/projects/markdown/">markdown</a>
+and <a href="http://www.yaml.org/">yaml</a> data and uses the <a href="http://lesscss.org/">less</a>
+or <a href="http://sass-lang.com/">sass</a> preprocessors to create css. Data from the whole
+site is available to html files with <a href="http://jinja.pocoo.org">Jinja2</a> templating
+syntax. Jagss can run an http testing server, watching the source files for changes
+and updating the site accordingly. Jagss can then deploy the static site via sftp
+or to an <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html">Amazon S3</a>
+bucket, only updating those files that have been changed.</p>
+
+<p>I made this generator when I was working on a site that had a lot of
+dictionary type data that I wanted to work into the templates.</p>
+
+<p>The source code is available <a href="https://github.com/esonderegger/jagss">on github</a>.</p>
+
+<p>Obviously there are already a ton of static site generators out there.
+Making this one has been useful for me as I learn more about python,
+but hopefully this will be useful to someone else.</p>
+
+<h2>Installation</h2>
+
+<p>If you just want to use jagss, the simplest way is:</p>
+
+<pre><code>pip install jagss
+</code></pre>
+
+<p>If you want to make changes to how jagss works:</p>
+
+<pre><code>git clone git://github.com/esonderegger/jagss.git
+cd jagss
+virtualenv jagss_env
+. jagss_env/bin/activate
+python setup.py develop
+</code></pre>
+
+<h3>Preprocessors</h3>
+
+<p>If you want to use jagss with a css preprocessor (and you should - they're awesome!),
+you will need to install the preprocessor of your choice.</p>
+
+<p>To install less, the easiest way is to use the
+<a href="https://www.npmjs.org/">Node Package Manager</a> (npm):</p>
+
+<pre><code>npm install -g less
+</code></pre>
+
+<p>To install sass, install it via its ruby gem:</p>
+
+<pre><code>gem install sass
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Jagss is called from the command line. First, to build a new jagss project, make
+a new folder and cd into it:</p>
+
+<pre><code>mkdir projectname
+cd projectname
+</code></pre>
+
+<p>Then, to create your project structure, type:</p>
+
+<pre><code>jagss --create less
+</code></pre>
+
+<p>Or, if you prefer to use sass:</p>
+
+<pre><code>jagss --create sass
+</code></pre>
+
+<p>Or, if you don't want to use a css preprocessor:</p>
+
+<pre><code>jagss --create css
+</code></pre>
+
+<p>If you choose to go the preprocessor route, this will create a less or a sass 
+folder and a file named folder-name.less/scss inside it, which will compile to
+/css/folder-name.css in the staticOutput folder. I recommend using one master
+file that uses @import statements to include other less and css files.</p>
+
+<p>Next, a server that updates automatically can be run with:</p>
+
+<pre><code>jagss --server 8080
+</code></pre>
+
+<p>Where 8080 is the port number the server will run on.</p>
+
+<p>Then, point your browser at <a href="http://localhost:8080">http://localhost:8080</a>, edit your
+site, and click 'refresh' to see your changes. To stop the server, hit ctrl + c.</p>
+
+<p>When you are happy with the state of your static site, jagss can deploy to either sFTP
+or to an Amazon S3 bucket. To do this, enter the appropriate values in the config.yaml
+file and run</p>
+
+<pre><code>jagss --deploy sftp
+</code></pre>
+
+<p>or</p>
+
+<pre><code>jagss --deploy s3
+</code></pre>
+
+<h2>Quirks</h2>
+
+<p>It's important to know a bit about how jagss works in order to use some of the
+power that's included and to avoid using one of the (few) magic variable names.</p>
+
+<p>Markdown files can include metadata in the yaml format at the beginning of the file.</p>
+
+<p>To separate the yaml content from the markdown content, include a line with this text:</p>
+
+<pre><code>-*-*-*-
+</code></pre>
+
+<p>Each Jinja2 template file is rendered with a magic variarble called 'site'.</p>
+
+<p>This variable is created when the generator does a first pass of the source folder looking
+for markdown files with yaml front matter as well as yaml files.</p>
+
+<p>Individual markdown files are also rendered to html according to the 'template' value in the yaml
+content at the top of the file. The yaml data from that file, as well as values for the url and
+relative path for the file are available at a variable called 'page'. For markdown files, the
+rendered html is available at page.html. There is also a reserved variable named 'type', which
+will be used in future updates.</p>
+
+<p>For a very basic example, you might have a jagss project organized like this:</p>
+
+<pre><code>jagsstest/
+    sass/
+        jagsstest.scss
+    site/
+        index.html
+        stuff/
+            thing1.md
+            thing2.md
+            thing3.md
+    staticOutput/
+    templates/
+        default.html
+</code></pre>
+
+<p>default.html could be as simple as:</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;{{ page.title }}&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        {{ page.html }}
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>The thing1.md, thing2.md, and thing3.md could look something like:</p>
+
+<pre><code>template: default.html
+title: Thing Number 1
+-*-*-*-
+# Thing Number 1
+
+Some more in depth content about the first thing would go here.
+</code></pre>
+
+<p>Then, for index.html to link to all the things in the stuff folder, it would be:</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;A Very Basic Site&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Some things:&lt;/h1&gt;
+        {% for thing in site['/stuff'] %}
+        &lt;p&gt;&lt;a href="{{ thing.url }}"&gt;{{ thing.title }}&lt;/a&gt;&lt;/p&gt;
+        {% endfor %}
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Note that the naming of the "stuff" folder and all the variables in the yaml content
+(except for 'html', 'name', 'relativePath', 'type', and 'url') can be whatever you
+want them to be.</p>
+
+<p>Hopefully the full site examples can help explain the logic of this a little better.</p>
+
+<p>Enjoy! Please get <a href="http://esonderegger.github.io/contact.html">get in touch</a> with any comments
+or suggestions for improvements.</p>
+
+            </div>
+        </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-10552267-7', 'srtlabs.com');
+  ga('send', 'pageview');
+
+</script>
+    </body>
+</html>

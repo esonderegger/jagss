@@ -1,0 +1,23 @@
+<div class="textPost">
+    <div class="container">
+        <div class="row ebsTextContent">
+            {% if story.date %}
+            <div class="col-md-3 hidden-xs hidden-sm postDate">{{ story.date }}</div>
+            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 ebsActualText" data-permalink="{{ story.url }}">
+            {% else %}
+            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3 ebsActualText" data-permalink="{{ story.url }}">
+            {% endif %}
+                {% if not noheadline %}
+                {% if story.link %}
+                <h1><a href="{{ story.link }}">{{ story.title }}</a></h1>
+                {% elif story.url and not noheadlinelink %}
+                <h1><a href="{{ story.url }}">{{ story.title }}</a></h1>
+                {% else %}
+                <h1>{{ story.title }}</h1>
+                {% endif %}
+                {% endif %}
+                {{ story.html }}
+            </div>
+        </div>
+    </div>
+</div>

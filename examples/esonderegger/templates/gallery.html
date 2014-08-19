@@ -1,0 +1,18 @@
+<div class="photoPost">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 ebsPhotoGallery">
+                <div class="row">
+                    {% for photo in gallery.photos %}
+                    <div class="col-xs-6  col-sm-4 ebsGalleryThumbnail" id="{{ photo.fullsize[:-4] }}"
+                    data-width="{{ photo.width }}" data-height="{{ photo.height }}" data-root="{{ gallery.relativePath }}">
+                        <a href="javascript:void(0)" class="galleryThumbnailLink">
+                            <img class="img-responsive" src="{{ gallery.relativePath }}/{{ photo.thumbnail }}" alt="{{ photo.title }}" />
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

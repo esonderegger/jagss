@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Personal web site for Evan Sonderegger">
+        <meta name="author" content="Evan Sonderegger">
+        <link rel="icon" href="/favicon.png">
+        <title>Projects - esonderegger</title>
+        <link href="/css/esonderegger.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet'>
+        
+    </head>
+    <body class="textPost">
+        
+
+<div id="ebsNavbarContainer">
+    <div class="container" id="ebsNavbarContainer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/" class="ebsNavbarMainLink">
+                        <span class="letterE">e</span><span class="otherLetters">sonderegger</span>
+                    </a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/about.html" class="ebsNavbarLink">ABOUT</a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ebsNavbarActive">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/projects.html" class="ebsNavbarLink">PROJECTS</a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/contact.html" class="ebsNavbarLink">CONTACT</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="textPost">
+    <div class="container">
+        <div class="row ebsTextContent">
+            
+            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3 ebsActualText" data-permalink="/projects.html">
+            
+                
+                <p>Here are some things that I'm working on or have worked on:</p>
+
+<h2>Code</h2>
+
+<h3><a href="http://www.moviepresto.com">Movie, Presto!</a></h3>
+
+<p>This site aims to be an elegant front end to the movie metadata at <a href="http://www.themoviedb.org/">themoviedb.org</a>.
+It attempts to find matching entries in the iTunes, Amazon instant, and Nexflix catalogs and provide
+links directly to the desired content. It is built using <a href="http://flask.pocoo.org/">Flask</a> and is hosted on
+<a href="https://developers.google.com/appengine/">App Engine</a>.</p>
+
+<h3><a href="https://gist.github.com/2334002">Modal Photo Gallery for Bootstrap/Jekyll</a></h3>
+
+<p>I put this together because I was frustrated with the state of image galleries available for
+Twitter Bootstrap. I was using Jekyll, Bootstrap 2, and Github pages to host this site back then. I don't use this for my photo galleries any more, but I've <a href="/photography.html">left the demo up for posterity.</a></p>
+
+<p>Working with the Jekyll posts system added a little bit of complexity. I
+decided to make each photo its own post and create a python script that auto-generates the html files
+that live in the posts directory.</p>
+
+<h3><a href="/minesweeper.html">Minesweeper in Javascript/jquery</a></h3>
+
+<p>I built this in response to <a href="http://www.thumbtack.com/challenges">Thumbtack's programming challenges</a>, but had
+a lot of fun with it, so decided to go a little overboard. The wonky UI (validate and cheat buttons) is a result
+of the specifications they give. It definitely made me appreciate how elegant Microsoft's original design was.
+When I'm done applying at Thumbtack, I may give it the more conventional buttons.</p>
+
+<h2>Music</h2>
+
+<h3><a href="http://www.amazon.com/Knock-Yourself-Out-Bass-Brass/dp/B003H29SGU">Off Bass Brass: Knock Yourself Out</a></h3>
+
+<p>Off Bass Brass is a tuba/euphonium quartet consisting of Ryan McGeorge and  Mark Jenkins on euphonium
+and John Cradler and Tom Holtz on Tuba. They Recorded "Knock Yourself Out" at the Landon School for Boys in early 2009
+with me as their engineer. The CD was released on the <a href="http://www.potenzamusic.com/">Potenza Music</a> label later that year.</p>
+
+<h2>Web</h2>
+
+<h3><a href="/">This Site</a></h3>
+
+<p>This site is built using my static site generator, <a href="https://github.com/esonderegger/jagss">JAGSS</a> and is hosted on <a href="http://pages.github.com/">Github Pages</a>.
+It relies heavily on the <a href="http://getbootstrap.com/">Twitter Bootstrap</a> framework. Posts and pages are written in <a href="http://daringfireball.net/projects/markdown/">Markdown</a> and templates are written in <a href="http://jinja.pocoo.org">Jinja2</a>.</p>
+
+<h3><a href="http://srtlabs.com/">Service Robotics &amp; Technologies</a></h3>
+
+<p>I built this site for my startup using JAGSS and Bootstrap. It is hosted on <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html">Amazon S3</a>.</p>
+
+<h3><a href="http://teibertrio.com/">Teiber Trio</a></h3>
+
+<p>The Teiber Trio conists of Regino Madrid (violin), Derek Smith (viola), and Charlie Powers (cello).
+I built this site in 2009 using <a href="http://wordpress.org">Wordpress</a>, knowing I would not be involved in 
+the site's maintenance. I also took the photos featured on the site.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/esonderegger.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-10552267-6', 'esonderegger.github.io');
+          ga('send', 'pageview');
+
+        </script>
+        
+        
+        
+    </body>
+</html>
+    

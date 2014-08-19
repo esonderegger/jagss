@@ -1,0 +1,5 @@
+template: generic.html
+title: Innovation Award Mid-Term Update
+-*-*-*-
+
+![Kuka YouBot](/img/news/youbot-9.png)We have reached the mid-point of the [KUKA Innovation Award program](http://www.kuka-labs.com/en/network/innovationaward/), and progress has been pretty strong so far. SRT has been working towards the development of an Autonomous Custodial Architecture (ACA) to control a multi-robot system through the various roles of cleaning an office environment. The KUKA youBot is playing the role of trash can detection and emptying, while a swarm of iRobot Creates are being used to simulate vacuuming. Utilizing shared office space mapping and robot localization, along with task-driven assignments, these systems are successfully navigating their environment and fulfilling their robotic roles. We are looking forward to competing with other great innovative organizations during the Automatica 2014 Conference in Munich.

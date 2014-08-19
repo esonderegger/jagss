@@ -1,0 +1,41 @@
+@import "bourbon/bourbon";
+@import "bitters/bitters";
+@import "neat/neat";
+@import "neat/neat-helpers";
+
+.text-section {
+    @include outer-container;
+}
+.text-content {
+    @include span-columns(6);
+    @include shift(3);
+}
+.headerOuter {
+    @include outer-container;
+}
+.headerInner {
+    @include span-columns(8);
+    @include shift(2);
+    padding-bottom: 15px;
+    border-bottom: #eee 1px dotted;
+    margin-bottom: 15px;
+}
+.headerInner h1 {
+    @include span-columns(3);
+    font-size: 3.2em;
+    letter-spacing:5px;
+}
+.headerInner p {
+    @include span-columns(9);
+    margin-top: 25px;
+    font-size: 1.6em;
+    letter-spacing:2px;
+}
+pre {
+    background-color: #eee;
+    color: #008209;
+    padding: 10px;
+    line-height: 1.2em;
+    border-radius: 5px;
+    box-shadow: 1px 2px 5px 0px darken(#008209, 10);
+}

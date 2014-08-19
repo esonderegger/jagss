@@ -1,0 +1,5 @@
+template: generic.html
+title: Innovation Award Final Thoughts
+-*-*-*-
+
+![Kuka YouBot](/img/news/youbot-rviz.png)SRT would like to thank [KUKA Laboratories](http://www.kuka-labs.com/en/) for selecting us for the [KUKA Innovation Award](http://www.kuka-labs.com/en/network/innovationaward/) and for the opportunity to work with a youBot for the last 8 months in developing and maturing our Autonomous Custodial Architecture (ACA). The youBot platform provided a strong demonstration capability to allow implementation of our architecture and we hope to continue maturing this work beyond the Innovation Award opportunity. We would like to extend our congratulations to the [University of Zurich, Robotics & Perception Group](http://rpg.ifi.uzh.ch/), the winners of the KUKA Innovation Award on their excellent work with their collaborative air-ground robotics demonstration!

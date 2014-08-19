@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Service Robotics and Technologies{% endblock %}
+
+{% block body %}
+{% set active = 'home' %}
+<div class="container">
+    {% include 'navbar.html' %}
+    <div class="jumbotron">
+        <h1>Robots At Your Service</h1>
+        <p>Service Robotics &amp; Technologies (SRT) integrates innovative software solutions with 3rd party hardware platforms to augment human driven tasks as performed in the custodial, hospitality, and food/beverage industries.</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="list-group">
+                <div class="list-group-item active">
+                    <h4>Online Ordering with SRT</h4>
+                </div>
+                <div class="list-group-item srtIndexItem">
+                    <p>Why would a robotics startup be making an online ordering system?</p>
+                    <p><a class="btn btn-info" href="/online-ordering/">Learn more &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="list-group">
+                <div class="list-group-item active">
+                    <h4>Automation Services</h4>
+                </div>
+                <div class="list-group-item srtIndexItem">
+                    <p>Do you have a business with a task that can benefit from some robotics expertise? Maybe we can help.</p>
+                    <p><a class="btn btn-info" href="/contact.html">Contact us &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="list-group">
+                <div class="list-group-item active">
+                    <h4>SRT Research</h4>
+                </div>
+                <div class="list-group-item srtIndexItem">
+                    <p>Find out more about some of the research projects we're working on.</p>
+                    <p><a class="btn btn-info" href="/news/20131015-Youbot-Sponsored-Track.html">Learn more &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row genericBody">
+        <div class="col-sm-12">
+            <h4 id="newsHeader">Recent News from SRT</h4>
+            {% for newsItem in site['/news'] |reverse %}
+            <h3><a href="{{ newsItem.url }}">{{ newsItem.title }}</a></h3>
+            {{ newsItem.html }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

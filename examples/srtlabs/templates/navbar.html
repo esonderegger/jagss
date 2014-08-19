@@ -1,0 +1,20 @@
+<div class="container" id="srtNavbarContainer">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/"><img src="/img/SRT-masthead.png" width="189" alt="Service Robotics and Technologies" /></a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if active == 'home' %}<li class="active">{% else %}<li>{% endif %}<a href="/">Home</a></li>
+                {% if active == 'about' %}<li class="active">{% else %}<li>{% endif %}<a href="/about.html">About</a></li>
+                {% if active == 'contact' %}<li class="active">{% else %}<li>{% endif %}<a href="/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>

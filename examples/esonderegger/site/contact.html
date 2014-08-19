@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - Evan Sonderegger{% endblock %}
+
+{% set bodyclass = 'photo' %}
+
+{% block body %}
+{% set active = 'contact' %}
+{% include 'navbar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 contactEmailDiv text-center">
+            <h1><a href="mailto:evan.sonderegger@gmail.com" class="contactEmailLink">
+                <span>evan.sonderegger</span><span class="letterE">@</span><span>gmail.com</span>
+            </a></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-2 col-md-2 col-md-offset-4">
+            <a href="https://github.com/esonderegger">
+                <img class="img-responsive center-block" src="/img/GitHub-Mark-Light-120px-plus.png" alt="github profile" width="60px" />
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="https://twitter.com/esonderegger">
+                <img class="img-responsive center-block" src="/img/Twitter_logo_white.png" alt="twitter profile" width="74px" />
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+sourceDir: /Users/esonderegger/Documents/programming/jagss/examples/jagssdocs/site
+outputDir: /Users/esonderegger/Documents/programming/jagss/examples/jagssdocs/staticOutput
+templatesDir: /Users/esonderegger/Documents/programming/jagss/examples/jagssdocs/templates
+lessFile: False
+sassFile: /Users/esonderegger/Documents/programming/jagss/examples/jagssdocs/sass/jagssdocs.scss
+
+sftpAddress: none
+sftpUsername: none
+sftpPassword: none
+sftpDirectory: none
+s3AccessKey: <redacted>
+s3SecretKey: <redacted>
+s3BucketName: jagss.srtlabs.com

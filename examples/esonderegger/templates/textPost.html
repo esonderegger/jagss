@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} - esonderegger{% endblock %}
+
+{% block body %}
+{% set active = page.active %}
+{% include 'navbar.html' %}
+{% set story = page %}
+{% set noheadlinelink = True %}
+{% include 'textContent.html' %}
+{% endblock %}

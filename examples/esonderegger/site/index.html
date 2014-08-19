@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}esonderegger - personal site for Evan Sonderegger{% endblock %}
+
+{% block body %}
+{% set active = 'home' %}
+
+    {% include 'navbar.html' %}
+    {% for item in site['/posts'][-10:]|reverse %}{% if item.type == 'folder' %}
+        {% for post in site['/posts/' + item.name] %}
+            {% if post.template == 'photoPost.html' %}
+                {% set photo = post %}
+                {% include 'singlePhoto.html' %}
+            {% endif %}
+            {% if post.template == 'galleryPost.html' %}
+                {% set gallery = post %}
+                {% include 'gallery.html' %}
+            {% endif %}
+            {% if post.template == 'textPost.html' %}
+                {% set story = post %}
+                {% include 'textContent.html' %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}{% endfor %}
+<div class="modal fade" id="galleryModal" data-id="none">
+  <div class="modal-dialog" id="galleryModalDialog">
+    <div class="modal-content" id="galleryModalContent">
+      <div class="modal-header" id="galleryModalHeader">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $(".galleryThumbnailLink").on('click', function(e) {
+        makeGalleryModal($(this).parent().attr('id'));
+        $('#galleryModal').modal();
+    });
+    shortenLongArticles();
+});
+</script>
+{% endblock %}

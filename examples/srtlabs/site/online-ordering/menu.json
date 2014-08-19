@@ -1,0 +1,162 @@
+{
+  "updated": 20130812,
+  "drinks": [
+    {
+      "name": "coffee",
+      "image": "images/coffee.jpg",
+      "sizes": [
+        {
+          "price": 173,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 200,
+          "size": "medium 12 oz"
+        },
+        {
+          "price": 227,
+          "size": "large 16 oz"
+        }
+      ]
+    },
+    {
+      "name": "espresso",
+      "image": "images/espresso.jpg",
+      "sizes": [
+        {
+          "price": 200,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 250,
+          "size": "medium 12 oz"
+        }
+      ]
+    },
+    {
+      "name": "cappuccino",
+      "image": "images/cappuccino.jpg",
+      "sizes": [
+        {
+          "price": 309,
+          "size": "medium 12 oz"
+        }
+      ]
+    },
+    {
+      "name": "macchiato",
+      "image": "images/macchiato.jpg",
+      "sizes": [
+        {
+          "price": 250,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 277,
+          "size": "medium 12 oz"
+        }
+      ]
+    },
+    {
+      "name": "cortado",
+      "image": "images/cortado.jpg",
+      "sizes": [
+        {
+          "price": 286,
+          "size": "small 8 oz"
+        }
+      ]
+    },
+    {
+      "name": "latte",
+      "image": "images/latte.jpg",
+      "sizes": [
+        {
+          "price": 309,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 341,
+          "size": "medium 12 oz"
+        },
+        {
+          "price": 418,
+          "size": "large 16 oz"
+        }
+      ]
+    },
+    {
+      "name": "mocha",
+      "image": "images/mocha.jpg",
+      "sizes": [
+        {
+          "price": 350,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 382,
+          "size": "medium 12 oz"
+        },
+        {
+          "price": 459,
+          "size": "large 16 oz"
+        }
+      ]
+    },
+    {
+      "name": "americano",
+      "image": "images/americano.jpg",
+      "sizes": [
+        {
+          "price": 264,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 264,
+          "size": "medium 12 oz"
+        },
+        {
+          "price": 309,
+          "size": "large 16 oz"
+        }
+      ]
+    },
+    {
+      "name": "chai latte",
+      "image": "images/chailatte.jpg",
+      "sizes": [
+        {
+          "price": 350,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 382,
+          "size": "medium 12 oz"
+        },
+        {
+          "price": 459,
+          "size": "large 16 oz"
+        }
+      ]
+    },
+    {
+      "name": "hot chocolate",
+      "image": "images/hotchocolate.jpg",
+      "sizes": [
+        {
+          "price": 282,
+          "size": "small 8 oz"
+        },
+        {
+          "price": 309,
+          "size": "medium 12 oz"
+        },
+        {
+          "price": 331,
+          "size": "large 16 oz"
+        }
+      ]
+    }
+  ],
+  "food": []
+}

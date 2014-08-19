@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% set active = page.active %}
+{% set bodyclass = 'photo' %}
+
+{% block body %}
+{% include 'navbar.html' %}
+{% set gallery = page %}
+{% include 'gallery.html' %}
+<div class="modal fade" id="galleryModal" data-id="none">
+  <div class="modal-dialog" id="galleryModalDialog">
+    <div class="modal-content" id="galleryModalContent">
+      <div class="modal-header" id="galleryModalHeader">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $(".galleryThumbnailLink").on('click', function(e) {
+        makeGalleryModal($(this).parent().attr('id'));
+        $('#galleryModal').modal();
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,13 @@
+sourceDir: /Users/esonderegger/Documents/programming/jagss/examples/esonderegger/site
+outputDir: /Users/esonderegger/Documents/programming/jagss/examples/esonderegger/staticOutput
+templatesDir: /Users/esonderegger/Documents/programming/jagss/examples/esonderegger/templates
+lessFile: /Users/esonderegger/Documents/programming/jagss/examples/esonderegger/less/esonderegger.less
+sassFile: False
+
+sftpAddress: none
+sftpUsername: none
+sftpPassword: nonew
+sftpDirectory: none
+s3AccessKey: none
+s3SecretKey: none
+s3BucketName: none

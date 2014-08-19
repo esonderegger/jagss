@@ -1,0 +1,29 @@
+template: galleryPost.html
+title: California (from 2008)
+active: home
+photos:
+  - title: Oceanside at Night
+    thumbnail: california-thumb-1.jpg
+    fullsize: california-1.jpg
+    width: 1800
+    height: 1200
+  - title: La Jolla
+    thumbnail: california-thumb-2.jpg
+    fullsize: california-2.jpg
+    width: 1800
+    height: 1200
+  - title: La Jolla
+    thumbnail: california-thumb-3.jpg
+    fullsize: california-3.jpg
+    width: 1800
+    height: 1200
+  - title: La Jolla
+    thumbnail: california-thumb-4.jpg
+    fullsize: california-4.jpg
+    width: 1800
+    height: 1200
+  - title: La Jolla After Sunset
+    thumbnail: california-thumb-5.jpg
+    fullsize: california-5.jpg
+    width: 1800
+    height: 1200
