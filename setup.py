@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def readme():
@@ -22,7 +22,7 @@ setup(name='jagss',
       author='Evan Sonderegger',
       author_email='evan.sonderegger@gmail.com',
       license='MIT',
-      packages=['jagss'],
+      packages=find_packages(exclude=['examples*']),
       install_requires=requirements,
       scripts=['bin/jagss'],
       zip_safe=False)
