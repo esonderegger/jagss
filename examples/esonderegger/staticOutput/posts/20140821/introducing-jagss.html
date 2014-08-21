@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Personal web site for Evan Sonderegger">
+        <meta name="author" content="Evan Sonderegger">
+        <link rel="icon" href="/favicon.png">
+        <title>Introducing JAGSS - esonderegger</title>
+        <link href="/css/esonderegger.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet'>
+        
+    </head>
+    <body class="textPost">
+        
+
+<div id="ebsNavbarContainer">
+    <div class="container" id="ebsNavbarContainer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/" class="ebsNavbarMainLink">
+                        <span class="letterE">e</span><span class="otherLetters">sonderegger</span>
+                    </a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/about.html" class="ebsNavbarLink">ABOUT</a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/projects.html" class="ebsNavbarLink">PROJECTS</a>
+                </span>
+            </div>
+            <div class="col-xs-4 col-sm-3 ebsNavbarItem ">
+                <span class="ebsNavbarLinkWrapper">
+                    <a href="/contact.html" class="ebsNavbarLink">CONTACT</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="textPost">
+    <div class="container">
+        <div class="row ebsTextContent">
+            
+            <div class="col-md-3 hidden-xs hidden-sm postDate">21Aug2014</div>
+            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 ebsActualText" data-permalink="/posts/20140821/introducing-jagss.html">
+            
+                
+                
+                <h1>Introducing JAGSS</h1>
+                
+                
+                <p>I'm proud to to announce the release of my command line tool for generating static web sites, appropriately titled "Just Another Generator for Static Sites".</p>
+
+<p>I've been using it for this site and the <a href="http://srtlabs.com">SRT Labs</a> site for a while now, but I finally got around to uploading it to the <a href="https://pypi.python.org/pypi/jagss/0.0.1">Python Package Index</a>.</p>
+
+<p>Full documentation is <a href="http://jagss.rpy.xyz">here</a>.</p>
+
+<p>The source code is available <a href="https://github.com/esonderegger/jagss">here</a>.</p>
+
+<p>The recommended procedure for installation and building a site is:</p>
+
+<pre><code>sudo pip install jagss
+</code></pre>
+
+<p>And then to build a site</p>
+
+<pre><code>mkdir mySite
+cd mySite
+jagss --create sass
+jagss --server 8080
+</code></pre>
+
+<p>Then edit the markdown, template, scss, etc. files to your heart's content.</p>
+
+<p>Then edit the config.yaml file with your s3 access key, secret key, and bucket name.</p>
+
+<p>Then, in the terminal window, hit ctrl-c to stop the testing server, and deploy with:</p>
+
+<pre><code>jagss --deploy s3
+</code></pre>
+
+<p>Enjoy! And please let me know if you're using jagss and what you think about it.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/esonderegger.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-10552267-6', 'esonderegger.github.io');
+          ga('send', 'pageview');
+
+        </script>
+        
+        
+        
+    </body>
+</html>
+    

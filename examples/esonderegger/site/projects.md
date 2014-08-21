@@ -8,6 +8,9 @@ Here are some things that I'm working on or have worked on:
 Code
 ----
 
+### [JAGSS - Just Another Generator for Static Sites](http://jagss.rpy.xyz)
+JAGSS is a command line tool for generating static web sites. It is built using [python](https://www.python.org/), [markdown](http://daringfireball.net/projects/markdown/), [yaml](http://www.yaml.org/), [jinja2](http://jinja.pocoo.org/), [less](http://lesscss.org/), and [sass](http://sass-lang.com/). I use it for creating this site and several others.
+
 ### [Movie, Presto!](http://www.moviepresto.com)
 This site aims to be an elegant front end to the movie metadata at [themoviedb.org](http://www.themoviedb.org/).
 It attempts to find matching entries in the iTunes, Amazon instant, and Nexflix catalogs and provide

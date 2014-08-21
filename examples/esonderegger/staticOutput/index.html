@@ -48,6 +48,62 @@
         
             
             
+            
+                
+                <div class="textPost">
+    <div class="container">
+        <div class="row ebsTextContent">
+            
+            <div class="col-md-3 hidden-xs hidden-sm postDate">21Aug2014</div>
+            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 ebsActualText" data-permalink="/posts/20140821/introducing-jagss.html">
+            
+                
+                
+                <h1><a href="/posts/20140821/introducing-jagss.html">Introducing JAGSS</a></h1>
+                
+                
+                <p>I'm proud to to announce the release of my command line tool for generating static web sites, appropriately titled "Just Another Generator for Static Sites".</p>
+
+<p>I've been using it for this site and the <a href="http://srtlabs.com">SRT Labs</a> site for a while now, but I finally got around to uploading it to the <a href="https://pypi.python.org/pypi/jagss/0.0.1">Python Package Index</a>.</p>
+
+<p>Full documentation is <a href="http://jagss.rpy.xyz">here</a>.</p>
+
+<p>The source code is available <a href="https://github.com/esonderegger/jagss">here</a>.</p>
+
+<p>The recommended procedure for installation and building a site is:</p>
+
+<pre><code>sudo pip install jagss
+</code></pre>
+
+<p>And then to build a site</p>
+
+<pre><code>mkdir mySite
+cd mySite
+jagss --create sass
+jagss --server 8080
+</code></pre>
+
+<p>Then edit the markdown, template, scss, etc. files to your heart's content.</p>
+
+<p>Then edit the config.yaml file with your s3 access key, secret key, and bucket name.</p>
+
+<p>Then, in the terminal window, hit ctrl-c to stop the testing server, and deploy with:</p>
+
+<pre><code>jagss --deploy s3
+</code></pre>
+
+<p>Enjoy! And please let me know if you're using jagss and what you think about it.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+            
+        
+    
+        
+            
+            
                 
                 <div class="photoPost">
     <div class="container">
@@ -417,62 +473,6 @@ done
 </div>
             
             
-            
-        
-    
-        
-            
-            
-            
-                
-                <div class="textPost">
-    <div class="container">
-        <div class="row ebsTextContent">
-            
-            <div class="col-md-3 hidden-xs hidden-sm postDate">01Jan2014</div>
-            <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 ebsActualText" data-permalink="/posts/20140101/newyear.html">
-            
-                
-                
-                <h1><a href="/posts/20140101/newyear.html">New Year, New Blog</a></h1>
-                
-                
-                <p>2013 Definitely had some highlights, which included:
-- Working on the <a href="https://www.youtube.com/watch?v=1dGKVC_Xl08">2013 Inauguration ceremony</a>. I'm still proud of the work we did, in spite of the hoopla that surrounded it.
-- <a href="https://www.youtube.com/watch?v=QDHR8tex8hY">Working with John Williams</a> (for the fourth time in eight years!) He is such an inspiration in how to live a creative life - it really should be a topic for its own post.
-- Making great progress working out at <a href="http://districtcrossfit.com/">District Crossfit</a>. Losing 15 pounds is really just the beginning. When I look back at my training logs from the beginning of 2013, it gets much harder to stay frustrated with hitting a plateau lately.
-- <a href="http://www.srtlabs.com">Starting a company</a> with two friends. I believe it's an exciting time to be involved in robotics and that open-source robotics has the potential to make the world a much better place.</p>
-
-<p>I'm not really one for specific resolutions, but in a general sense I'm currently trying to live well according to the following basic ideals (I don't know why I like writing these in the second person):</p>
-
-<h3>Take Care of Your Body</h3>
-
-<ul>
-<li><em>Sleep!</em></li>
-<li>Exercise regularly. This is ideally a wide range of activities, from playing ultimate to crossfit to cycling to swimming.</li>
-<li>Eat real food. This one really shouldn't be so hard.</li>
-</ul>
-
-<h3>Take Care of Your Mind</h3>
-
-<ul>
-<li><em>Sleep!</em></li>
-<li>Read. My current habits include reading too many articles and not enough real books. In 2014 I want to be regularly reading a novel or book-length nonfiction.</li>
-<li>Solve problems. For me that means doing puzzles like those found on <a href="https://www.codeeval.com">CodeEval</a> and working on side projects like building a <a href="https://github.com/esonderegger/jagss">static site generator</a>.</li>
-</ul>
-
-<h3>Take Care of Your Loved Ones</h3>
-
-<ul>
-<li>This one is a little harder to put into bullet points because it means being more reactive than proactive. It means listening to figure out what those loved ones need and then help out in whatever way possible.</li>
-</ul>
-
-<p>More specifically, I've recently decided that it is time to move on after eight amazing years in the <a href="http://www.marineband.marines.mil/">Marine Band</a>. This means I need to work on being more outgoing on the internet. I hope to share progress more regularly here. Also, I hope to soon port this site over to <a href="https://github.com/esonderegger/jagss">JAGSS</a> so I can share it as an example of what I think can be a pretty good website generating workflow.</p>
-
-            </div>
-        </div>
-    </div>
-</div>
             
         
     
