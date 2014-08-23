@@ -16,6 +16,10 @@
                 {% set gallery = post %}
                 {% include 'gallery.html' %}
             {% endif %}
+            {% if post.template == 'videoPost.html' %}
+                {% set video = post %}
+                {% include 'singleVideo.html' %}
+            {% endif %}
             {% if post.template == 'textPost.html' %}
                 {% set story = post %}
                 {% include 'textContent.html' %}
