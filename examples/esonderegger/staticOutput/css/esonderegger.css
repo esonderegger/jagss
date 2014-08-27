@@ -857,6 +857,7 @@ body{letter-spacing:.7px;color:#070707}
 .photoPost{background-color:#222}
 .postDate{text-align:right;color:#ff9700;margin-top:26px}
 .ebsSinglePhoto{padding-top:80px;padding-bottom:80px}
+.ebsEmbedVideo{margin:100px auto;height:360px;width:640px}
 .ebsSinglePhotoImg{box-shadow:0 2px 10px #000}
 .ebsPhotoGallery{padding-top:65px;padding-bottom:65px}
 .ebsGalleryThumbnail{margin-top:15px;margin-bottom:15px}
