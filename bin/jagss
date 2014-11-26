@@ -105,15 +105,15 @@ def main():
         masterDir = os.path.dirname(configDict['sourceDir'])
         observer.schedule(event_handler, path=masterDir, recursive=True)
         portNum = int(args.server)
-        usmbHttpServer = jagssServerThread(portNum, configDict['outputDir'])
+        jagssHttpServer = jagssServerThread(portNum, configDict['outputDir'])
         observer.start()
-        usmbHttpServer.start()
+        jagssHttpServer.start()
         try:
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
             observer.stop()
-            usmbHttpServer.shutdown()
+            jagssHttpServer.shutdown()
             print 'stopping testing server.\n'
         observer.join()
 
