@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import yaml
 import json
+import bs4
 
 
 def renderSiteOuput(sourceDir, outputBase, templatesDir, siteData):
@@ -79,8 +80,13 @@ def renderMarkdownFile(sourceDir, filename, newDir, templatesDir, siteData,
         jinjaEnv = Environment(loader=FileSystemLoader([templatesDir]))
         template = jinjaEnv.get_template(mdData['template'])
         output = template.render(page=mdData, site=siteData)
+        try:
+            soup = bs4.BeautifulSoup(output)
+            prettyOutput = soup.prettify()
+        except:
+            prettyOutput = output
         with open(newPath, 'w') as f:
-            f.write(output.encode('utf-8'))
+            f.write(prettyOutput.encode('utf-8'))
     else:
         with open(newPath, 'w') as f:
             f.write(mdData['html'].encode('utf-8'))
@@ -96,8 +102,13 @@ def renderYamlFile(sourceDir, filename, newDir, templatesDir, siteData,
         jinjaEnv = Environment(loader=FileSystemLoader([templatesDir]))
         template = jinjaEnv.get_template(yamlData['template'])
         output = template.render(page=yamlData, site=siteData)
+        try:
+            soup = bs4.BeautifulSoup(output)
+            prettyOutput = soup.prettify()
+        except:
+            prettyOutput = output
         with open(newPath, 'w') as f:
-            f.write(output.encode('utf-8'))
+            f.write(prettyOutput.encode('utf-8'))
     else:
         return False
     return newPath
@@ -110,8 +121,13 @@ def renderHtmlFile(sourceDir, filename, newDir, templatesDir, siteData,
     jinjaEnv = Environment(loader=jinjaFLS)
     template = jinjaEnv.get_template(filename)
     output = template.render(site=siteData)
+    try:
+        soup = bs4.BeautifulSoup(output)
+        prettyOutput = soup.prettify()
+    except:
+        prettyOutput = output
     with open(newPath, 'w') as f:
-        f.write(output.encode('utf-8'))
+        f.write(prettyOutput.encode('utf-8'))
     return newPath
 
 

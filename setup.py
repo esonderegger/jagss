@@ -11,7 +11,8 @@ requirements = [
     'pyyaml>=3.10',
     'watchdog>=0.6',
     'paramiko>=1.12.0',
-    'boto_rsync>=0.8.1'
+    'boto_rsync>=0.8.1',
+    'beautifulsoup4>=4.3.2'
 ]
 
 
