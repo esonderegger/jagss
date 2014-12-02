@@ -6,7 +6,7 @@
                 <div class="svgVideoControls">
                     <video height="360" width="640" data-duration="{{ video.duration }}">
                         {% for source in video.sources %}
-                        <source src="{{ source.sourceurl }}"  type="{{ source.sourcetype }}">
+                        <source src="{{ source.sourceurl }}" type="{{ source.sourcetype }}">
                         {% endfor %}
                     </video>
                 </div>

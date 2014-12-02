@@ -1,80 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <title>
-   Minesweeper in Javascript
-  </title>
-  <link href="/css/minesweeper.css" rel="stylesheet"/>
- </head>
- <body>
+<head>
+  <meta charset="utf-8" />
+  <title>Minesweeper in Javascript</title>
+  <link href="/css/minesweeper.css" rel="stylesheet" />
+</head>
+<body>
   <h1 id="winLossRow">
-   Minesweeper in Javascript
+  Minesweeper in Javascript
   </h1>
   <div class="infoRow">
-   <input id="clickFlags" type="checkbox" value="clickFlags">
-    Make Flags
-    <button id="validate">
-     Validate
-    </button>
-    <button id="cheat">
-     Cheat
-    </button>
-    <button id="saveGame">
-     Save Game
-    </button>
-   </input>
+    <input type="checkbox" id="clickFlags" value="clickFlags"> Make Flags
+    <button id="validate">Validate</button>
+    <button id="cheat">Cheat</button>
+    <button id="saveGame">Save Game</button>
   </div>
-  <table id="mineSweeperGame">
-  </table>
+  <table id="mineSweeperGame"></table>
   <div class="infoRow">
-   size:
-   <select id="gridSize" name="gridSize">
-    <option selected="selected" value="8">
-     8x8
-    </option>
-    <option value="12">
-     12x12
-    </option>
-    <option value="16">
-     16x16
-    </option>
-   </select>
-   mines:
-   <select id="numMines" name="numMines">
-    <option selected="selected" value="10">
-     10
-    </option>
-    <option value="20">
-     20
-    </option>
-    <option value="40">
-     40
-    </option>
-   </select>
-   <button id="newGame">
-    New Game
-   </button>
+    size:
+    <select id="gridSize" name="gridSize">
+    <option value="8" selected="selected">8x8</option>
+    <option value="12">12x12</option>
+    <option value="16">16x16</option>
+    </select>
+    mines:
+    <select id="numMines" name="numMines">
+    <option value="10" selected="selected">10</option>
+    <option value="20">20</option>
+    <option value="40">40</option>
+    </select>
+    <button id="newGame">New Game</button>
   </div>
   <div id="savedGamesSection">
-   <h2>
-    Your saved games:
-   </h2>
-   <div id="savedGames">
-   </div>
+    <h2>Your saved games:</h2>
+    <div id="savedGames"></div>
   </div>
-  <script src="/js/jquery.min.js">
-  </script>
-  <script src="/js/minesweeper.js">
-  </script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/minesweeper.js"></script>
   <script>
-   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-10552267-6', 'esonderegger.github.io');
     ga('send', 'pageview');
+
   </script>
- </body>
+</body>
 </html>
