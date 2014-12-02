@@ -1,6 +1,11 @@
 template: videoPost.html
 title: Lincoln Memorial Timelapse 
 active: home
-videoType: vimeo
-videoKey: 104478447
+videoType: html5
+duration: 12.98
+sources:
+- sourcetype: video/mp4
+  sourceurl: https://assets.rpy.xyz/video/lincoln540.mp4
+- sourcetype: video/webm
+  sourceurl: https://assets.rpy.xyz/video/lincoln540.webm
 -*-*-*-

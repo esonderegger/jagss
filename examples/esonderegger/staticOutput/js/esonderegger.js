@@ -50,6 +50,211 @@ function makeGalleryModal(photoID) {
     $('#galleryModalContent').css("background-image", "url(" + photo.attr('data-root') + "/" + photoID + ".jpg)");
     $('#galleryModalContent').css("background-size", modalWidth);    
 }
+function zeroPad(n, p, c) {
+    var pad_char = typeof c !== 'undefined' ? c : '0';
+    var pad = new Array(1 + p).join(pad_char);
+    return (pad + n).slice(-pad.length);
+}
+function getBaseLog(x, y) {
+    return Math.log(y) / Math.log(x);
+}
+function dbFromFloat(floatVal) {
+    return getBaseLog(10, floatVal) * 20;
+}
+function prettyTime(floatSeconds) {
+    var outStr = '';
+    var hours = Math.floor(floatSeconds / 3600);
+    floatSeconds -= hours * 3600;
+    var minutes = Math.floor(floatSeconds / 60);
+    floatSeconds -= minutes * 60;
+    if (hours > 0) {
+        outStr += hours + ':' + zeroPad(minutes, 2) + ':';
+    } else {
+        outStr += minutes + ':';
+    }
+    outStr += zeroPad(Math.round(floatSeconds), 2);
+    return outStr;
+}
+function makeSvgVideoControls() {
+  d3.selectAll('.svgVideoControls').each(function(){
+    var containerDiv = d3.select(this);
+    var vidElement = d3.select(this).select('video');
+    var thissvg = d3.select(this).append('svg');
+    thissvg.attr('width', '640');
+    thissvg.attr('height', '40');
+    thissvg.style('margin-top', "320px")
+    thissvg.append('rect').attr("x", 0).attr("y", 0).attr("width", 640).attr("height", 40)
+      .style("fill", "rgba(0, 0, 0, 0.5)");
+    var thiscounter = thissvg.append('text').attr("x", 110)
+      .attr("y", 25).attr("class", "videoCounterText")
+      .attr("text-anchor", "end").style("opacity", 0.7)
+      .text(prettyTime(0.0));
+    thissvg.append('line').attr("x1", 125).attr("x2", 475)
+      .attr("y1", 20).attr("y2", 20)
+      .style("stroke", "#888").style("stroke-width", "1")
+      .style("opacity", 0.7);
+    var sliderdrag = d3.behavior.drag()
+      .on("dragstart", function(d) {
+        d3.select(this).attr("data-dragging", "true");
+      })
+      .on("drag", function(d) {
+        if (125 < d3.event.x && d3.event.x < 475) {
+          d3.select(this).attr("cx", d3.event.x);
+        } else if (125 >= d3.event.x) {
+          d3.select(this).attr("cx", 125);
+        } else if (475 <= d3.event.x) {
+          d3.select(this).attr("cx", 475);
+        }
+      })
+      .on("dragend", function(d) {
+        d3.select(this).attr("data-dragging", "false");
+        var playedRatio = (d3.select(this).attr("cx") - 125) / 350;
+        vidElement[0][0].currentTime = vidElement.attr("data-duration") * playedRatio;
+      });
+    var thisslider = thissvg.append('circle').attr("cx", 125).attr("cy", 20).attr("r", 5)
+      .style("stroke-width", "3")
+      .style("stroke", "#ddd").style("fill", "#aaa")
+      .on('mouseover', function(d){
+        d3.select(this).transition().style("stroke", "#fff").style("fill", "#ccc");
+      })
+      .on('mouseout', function(d){
+        d3.select(this).transition().style("stroke", "#ddd").style("fill", "#aaa");
+      })
+      .attr("data-dragging", "false").call(sliderdrag);
+    thissvg.append('text').attr("x", 545).attr("y", 25).attr("class", "videoCounterText")
+      .attr("text-anchor", "end").style("opacity", 0.7)
+      .text(prettyTime(vidElement.attr("data-duration")));
+    var playpause = thissvg.append('image').attr("x", 20).attr("y", 5)
+      .attr("width", 30).attr("height", 30)
+      .style("opacity", 0.7)
+      .attr("xlink:href", "//assets.rpy.xyz/svg/play.svg")
+      .on("click", function() {
+        if (d3.select(this).attr("xlink:href") == "//assets.rpy.xyz/svg/play.svg") {
+          d3.select(this).attr("xlink:href", "//assets.rpy.xyz/svg/pause.svg");
+          vidElement[0][0].play();
+        } else {
+          d3.select(this).attr("xlink:href", "//assets.rpy.xyz/svg/play.svg");
+          vidElement[0][0].pause();
+        }
+      })
+      .on('mouseover', function(d){
+        d3.select(this).transition().style("opacity", 1.0);
+      })
+      .on('mouseout', function(d){
+        d3.select(this).transition().style("opacity", 0.7);
+      });
+    thissvg.append('image').attr("x", 560).attr("y", 5)
+      .attr("width", 30).attr("height", 30)
+      .style("opacity", 0.7)
+      .attr("xlink:href", "//assets.rpy.xyz/svg/volume-up.svg")
+      .on('mouseover', function(d){
+        d3.select(this).transition().style("opacity", 1.0);
+      })
+      .on('mouseout', function(d){
+        d3.select(this).transition().style("opacity", 0.7);
+      })
+      .on("click", function() {
+        if (d3.select(this).attr("xlink:href") == "//assets.rpy.xyz/svg/volume-up.svg") {
+          d3.select(this).attr("xlink:href", "//assets.rpy.xyz/svg/volume-off.svg");
+          vidElement[0][0].volume = 0.0;
+        } else {
+          d3.select(this).attr("xlink:href", "//assets.rpy.xyz/svg/volume-up.svg");
+          vidElement[0][0].volume = 1.0;
+        }
+      });
+    thissvg.append('image').attr("x", 605).attr("y", 5)
+      .attr("width", 30).attr("height", 30)
+      .style("opacity", 0.7)
+      .attr("xlink:href", "//assets.rpy.xyz/svg/arrows-alt.svg")
+      .on('mouseover', function(d){
+        d3.select(this).transition().style("opacity", 1.0);
+      })
+      .on('mouseout', function(d){
+        d3.select(this).transition().style("opacity", 0.7);
+      })
+      .on("click", function() {
+        if (!document.fullscreenElement &&    // alternative standard method
+            !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+          if (containerDiv[0][0].requestFullscreen) {
+            containerDiv[0][0].requestFullscreen();
+          } else if (document.documentElement.msRequestFullscreen) {
+            containerDiv[0][0].msRequestFullscreen();
+          } else if (document.documentElement.mozRequestFullScreen) {
+            containerDiv[0][0].mozRequestFullScreen();
+          } else if (document.documentElement.webkitRequestFullscreen) {
+            containerDiv[0][0].webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+          }
+          // enterFullScreen(vidElement, thissvg);
+          vidElement.attr("class", "videoIsFullscreen");
+          vidElement[0][0].setAttribute("width", window.outerWidth);
+          vidElement[0][0].setAttribute("height", window.outerHeight);
+          thissvg.style("margin-top", window.outerHeight - 40 + "px");
+          thissvg.style("margin-left", window.outerWidth / 2 - 320 + "px");
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          }
+        }
+      });
+    vidElement[0][0].addEventListener("timeupdate", function() {
+        var playedRatio = vidElement[0][0].currentTime / vidElement.attr("data-duration");
+        thiscounter.text(prettyTime(vidElement[0][0].currentTime));
+        if (thisslider.attr("data-dragging") == "false") {
+          thisslider.attr("cx", (playedRatio * 350) + 125);
+        }
+    });
+    vidElement[0][0].addEventListener("ended", function() {
+        playpause.attr("xlink:href", "//assets.rpy.xyz/svg/play.svg");
+    });
+  });
+}
+function enterFullScreen(vidSelection, svgSelection) {
+  vidSelection.attr("class", "videoIsFullscreen");
+  vidSelection[0][0].setAttribute("width", window.outerWidth);
+  vidSelection[0][0].setAttribute("height", window.outerHeight);
+  svgSelection.style("margin-top", window.outerHeight - 40 + "px");
+  svgSelection.style("margin-left", window.outerWidth / 2 - 320 + "px");
+}
+function ejectFullScreen() {
+  d3.selectAll('.svgVideoControls').each(function(){
+    var vidSelection = d3.select(this).select('video');
+    var svgSelection = d3.select(this).select('svg');
+    vidSelection.attr("class", "");
+    vidSelection[0][0].setAttribute("width", 640 + "px");
+    vidSelection[0][0].setAttribute("height", 360 + "px");
+    svgSelection.style("margin-top", 320 + "px");
+    svgSelection.style("margin-left", 0 + "px");
+  });
+}
+document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreen) {
+      ejectFullScreen();
+    }
+}, false);
+ 
+document.addEventListener("mozfullscreenchange", function () {
+    if (!document.mozFullScreen){
+      ejectFullScreen();
+    }
+}, false);
+ 
+document.addEventListener("webkitfullscreenchange", function () {
+    if (!document.webkitIsFullScreen) {
+      ejectFullScreen();
+    }
+}, false);
+ 
+document.addEventListener("msfullscreenchange", function () {
+    if (!document.msFullscreenElement) {
+      ejectFullScreen();
+    }
+}, false);
 
 function moveLeft(){
     var activeModal = $("#galleryModal").attr('data-id');
