@@ -33,6 +33,8 @@
 @link-color:            @brand-primary;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      #05457F;
+//** Link hover decoration.
+@link-hover-decoration: underline;
 
 
 //== Typography
@@ -177,13 +179,20 @@
 @input-color:                    @gray;
 //** `<input>` border color
 @input-border:                   #ccc;
-//** `<input>` border radius
+
+// TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
+//** Default `.form-control` border radius
 @input-border-radius:            @border-radius-base;
+//** Large `.form-control` border radius
+@input-border-radius-large:      @border-radius-large;
+//** Small `.form-control` border radius
+@input-border-radius-small:      @border-radius-small;
+
 //** Border color for inputs on focus
 @input-border-focus:             #66afe9;
 
 //** Placeholder text color
-@input-color-placeholder:        @gray-light;
+@input-color-placeholder:        #999;
 
 //** Default `.form-control` height
 @input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 2);
@@ -200,6 +209,8 @@
 //** Border color for textual input addons
 @input-group-addon-border-color: @input-border;
 
+//** Disabled cursor for form controls and buttons.
+@cursor-disabled:                not-allowed;
 
 //== Dropdowns
 //
@@ -620,6 +631,8 @@
 //** Progress bar text color
 @progress-bar-color:          #fff;
 
+//** Variable for setting rounded corners on progress bar.
+@progress-border-radius:      @border-radius-base;
 //** Default progress bar color
 @progress-bar-bg:             @brand-primary;
 //** Success progress bar color
@@ -653,7 +666,15 @@
 @list-group-active-border:      @list-group-active-bg;
 @list-group-active-text-color:  lighten(@list-group-active-bg, 40%);
 
+//** Text color of disabled list items
+@list-group-disabled-color:      @gray-light;
+//** Background color of disabled list items
+@list-group-disabled-bg:         @gray-lighter;
+//** Text color for content within disabled list items
+@list-group-disabled-text-color: @list-group-disabled-color;
+
 @list-group-link-color:         #555;
+@list-group-link-hover-color:   @list-group-link-color;
 @list-group-link-heading-color: #333;
 
 
@@ -663,6 +684,8 @@
 
 @panel-bg:                    #fff;
 @panel-body-padding:          15px;
+@panel-heading-padding:       10px 15px;
+@panel-footer-padding:        @panel-heading-padding;
 @panel-border-radius:         @border-radius-base;
 
 //** Border color for elements within panels
@@ -816,6 +839,8 @@
 @blockquote-border-color:     @gray-lighter;
 //** Page header border color
 @page-header-border-color:    @gray-lighter;
+//** Width of horizontal description list titles
+@dl-horizontal-offset:        @component-offset-horizontal;
 
 
 //== Miscellaneous
