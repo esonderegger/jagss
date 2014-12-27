@@ -4,7 +4,7 @@
             <div class="ebsEmbedVideo">
                 {% if video.videoType == 'html5' %}
                 <div class="svgVideoControls">
-                    <video height="360" width="640" data-duration="{{ video.duration }}">
+                    <video data-height="{{ video.height }}" data-width="{{ video.width }}" data-duration="{{ video.duration }}">
                         {% for source in video.sources %}
                         <source src="{{ source.sourceurl }}" type="{{ source.sourcetype }}">
                         {% endfor %}

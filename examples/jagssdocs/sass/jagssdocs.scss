@@ -1,35 +1,34 @@
+@import "_source-sans-pro";
 @import "bourbon/bourbon";
-@import "bitters/bitters";
+@import "base/base";
 @import "neat/neat";
-@import "neat/neat-helpers";
 
-.text-section {
-    @include outer-container;
+header {
+    @include outer-container(800px);
+    border-bottom: 1px dotted #eee;
+
+    h1 {
+        @include span-columns(12);
+        letter-spacing:5px;
+        @include media(720px) {
+            @include span-columns(3);
+        }
+    }
+    h2 {
+        @include span-columns(12);
+        @include omega;
+        font-size: 1.4em;
+        font-weight: 200;
+        margin-top: 0px;
+        letter-spacing:2px;
+        @include media(720px) {
+            @include span-columns(9);
+            margin-top: 34px;
+        }
+    }
 }
-.text-content {
-    @include span-columns(6);
-    @include shift(3);
-}
-.headerOuter {
-    @include outer-container;
-}
-.headerInner {
-    @include span-columns(8);
-    @include shift(2);
-    padding-bottom: 15px;
-    border-bottom: #eee 1px dotted;
-    margin-bottom: 15px;
-}
-.headerInner h1 {
-    @include span-columns(3);
-    font-size: 3.2em;
-    letter-spacing:5px;
-}
-.headerInner p {
-    @include span-columns(9);
-    margin-top: 25px;
-    font-size: 1.6em;
-    letter-spacing:2px;
+.jagss-readme {
+    @include outer-container(600px);
 }
 pre {
     background-color: #eee;

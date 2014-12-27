@@ -173,5 +173,5 @@ want them to be.
 
 Hopefully the full site examples can help explain the logic of this a little better.
 
-Enjoy! Please get [get in touch](http://esonderegger.github.io/contact.html) with any comments
+Enjoy! Please get [get in touch](https://rpy.xyz/contact.html) with any comments
 or suggestions for improvements.
