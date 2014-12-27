@@ -16,13 +16,15 @@ requirements = [
 
 
 setup(name='jagss',
-      version='0.0.1',
+      version='0.0.2',
       description='Just another generator for static sites',
-      url='http://jagss.rpy.xyz',
+      url='https://jagss.rpy.xyz',
       author='Evan Sonderegger',
-      author_email='evan.sonderegger@gmail.com',
+      author_email='evan@rpy.xyz',
       license='MIT',
       packages=find_packages(exclude=['examples*']),
       install_requires=requirements,
       scripts=['bin/jagss'],
+      test_suite='nose.collector',
+      tests_require=['nose'],
       zip_safe=False)
