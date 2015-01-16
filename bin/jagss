@@ -74,6 +74,24 @@ def main():
     else:
         configDict = False
     if configDict:
+        if not configDict['sourceDir'].startswith('/'):
+            configDict['sourceDir'] = os.path.join(os.getcwd(),
+                                                   configDict['sourceDir'])
+        if not configDict['outputDir'].startswith('/'):
+            configDict['outputDir'] = os.path.join(os.getcwd(),
+                                                   configDict['outputDir'])
+        if not configDict['templatesDir'].startswith('/'):
+            fullTemplatesDir = os.path.join(os.getcwd(),
+                                            configDict['templatesDir'])
+            configDict['templatesDir'] = fullTemplatesDir
+        if isinstance(configDict['lessFile'], str):
+            if not configDict['lessFile'].startswith('/'):
+                configDict['lessFile'] = os.path.join(os.getcwd(),
+                                                      configDict['lessFile'])
+        if isinstance(configDict['sassFile'], str):
+            if not configDict['sassFile'].startswith('/'):
+                configDict['sassFile'] = os.path.join(os.getcwd(),
+                                                      configDict['sassFile'])
         jagss.buildStaticSite(configDict['sourceDir'],
                               configDict['outputDir'],
                               configDict['templatesDir'],

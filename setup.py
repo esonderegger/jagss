@@ -16,7 +16,7 @@ requirements = [
 
 
 setup(name='jagss',
-      version='0.0.2',
+      version='0.0.3',
       description='Just another generator for static sites',
       url='https://jagss.rpy.xyz',
       author='Evan Sonderegger',

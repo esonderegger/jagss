@@ -41,19 +41,15 @@ def createNewSite(location, cssType):
 def createConfigFile(cwd, cssType):
     """creates a config.yaml file with default values inside the cwd"""
     siteName = os.path.split(cwd)[1]
-    conf = 'sourceDir: ' + os.path.join(cwd, 'site') + '\n'
-    conf += 'outputDir: ' + os.path.join(cwd, 'staticOutput') + '\n'
-    conf += 'templatesDir: ' + os.path.join(cwd, 'templates') + '\n'
+    conf = 'sourceDir: site\n'
+    conf += 'outputDir: staticOutput\n'
+    conf += 'templatesDir: templates\n'
     if cssType == 'less':
-        lessPath = os.path.join(cwd, 'less')
-        conf += 'lessFile: ' + os.path.join(lessPath, siteName + '.less')
-        conf += '\n'
+        conf += 'lessFile: less/' + siteName + '.less\n'
         conf += 'sassFile: False\n'
     elif cssType == 'sass':
         conf += 'lessFile: False\n'
-        sassPath = os.path.join(cwd, 'sass')
-        conf += 'sassFile: ' + os.path.join(sassPath, siteName + '.scss')
-        conf += '\n'
+        conf += 'sassFile: sass/' + siteName + '.scss\n'
     else:
         conf += 'lessFile: False\n'
         conf += 'sassFile: False\n'
