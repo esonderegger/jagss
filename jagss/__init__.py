@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from jinja2 import Environment, FileSystemLoader
+import jinja2
 import markdown2
 import os
 import shutil
@@ -9,160 +9,162 @@ import yaml
 import json
 
 
-def renderSiteOuput(sourceDir, outputBase, templatesDir, siteData):
-    for root, dirs, files in os.walk(sourceDir):
+def render_site_ouput(source_dir, output_base, templates_dir, site_data):
+    for root, dirs, files in os.walk(source_dir):
         for f in files:
-            folderID = root[len(sourceDir):]
-            outputDir = outputBase + folderID
+            folder_id = root[len(source_dir):]
+            output_dir = output_base + folder_id
             if f[:1] != '.':
-                renderSiteFile(root, f, outputDir, templatesDir, siteData,
-                               folderID)
+                render_site_file(root, f, output_dir, templates_dir, site_data,
+                                 folder_id)
 
 
-def populateSiteData(location):
-    siteData = {'/': []}
+def populate_site_data(location):
+    site_data = {'/': []}
     for root, dirs, files in os.walk(location):
-        folderID = '/' + root[len(location) + 1:]
-        siteData[folderID] = []
+        folder_id = '/' + root[len(location) + 1:]
+        site_data[folder_id] = []
         for f in files:
             if os.path.splitext(f)[1] == '.md':
-                mdData = dictFromMarkdown(os.path.join(root, f), folderID)
-                siteData[folderID].append(mdData)
+                md_data = dict_from_markdown(os.path.join(root, f), folder_id)
+                site_data[folder_id].append(md_data)
             if os.path.splitext(f)[1] == '.yaml':
-                ymlData = dictFromYaml(os.path.join(root, f), folderID)
-                siteData[folderID].append(ymlData)
+                yml_data = dict_from_yaml(os.path.join(root, f), folder_id)
+                site_data[folder_id].append(yml_data)
         for folder in dirs:
-            yamlData = {'relativePath': folderID}
-            yamlData['type'] = 'folder'
-            yamlData['name'] = folder
-            siteData[folderID].append(yamlData)
-    return siteData
+            yaml_data = {'relativePath': folder_id}
+            yaml_data['type'] = 'folder'
+            yaml_data['name'] = folder
+            site_data[folder_id].append(yaml_data)
+    return site_data
 
 
-def dictFromMarkdown(markdownPath, folderID):
+def dict_from_markdown(markdown_path, folder_id):
     separator = '-*-*-*-\n'
-    rawFile = open(markdownPath).read()
-    separatorIndex = rawFile.find(separator)
-    if separatorIndex > -1:
-        yamlData = yaml.load(rawFile[:separatorIndex])
-        mdData = rawFile[separatorIndex + len(separator):]
-        htmlData = markdown2.markdown(mdData)
-        yamlData['html'] = htmlData
-        yamlData['type'] = 'yaml+markdown'
+    raw_file = open(markdown_path).read()
+    separator_index = raw_file.find(separator)
+    if separator_index > -1:
+        yaml_data = yaml.load(raw_file[:separator_index])
+        md_data = raw_file[separator_index + len(separator):]
+        html_data = markdown2.markdown(md_data)
+        yaml_data['html'] = html_data
+        yaml_data['type'] = 'yaml+markdown'
     else:
-        yamlData = {'html': markdown2.markdown(rawFile)}
-        yamlData['type'] = 'markdown'
-    yamlData['relativePath'] = folderID
-    yamlData['url'] = folderID + '/'
-    filename = os.path.basename(markdownPath)
-    yamlData['url'] += os.path.splitext(filename)[0] + '.html'
-    return yamlData
+        yaml_data = {'html': markdown2.markdown(raw_file)}
+        yaml_data['type'] = 'markdown'
+    yaml_data['relativePath'] = folder_id
+    yaml_data['url'] = folder_id + '/'
+    filename = os.path.basename(markdown_path)
+    yaml_data['url'] += os.path.splitext(filename)[0] + '.html'
+    return yaml_data
 
 
-def dictFromYaml(yamlPath, folderID):
-    yamlData = yaml.load(open(yamlPath).read())
-    yamlData['relativePath'] = folderID
-    yamlData['type'] = 'yaml'
-    if 'template' in yamlData:
-        yamlData['url'] = folderID + '/'
-        filename = os.path.basename(yamlPath)
-        yamlData['url'] += os.path.splitext(filename)[0] + '.html'
-    return yamlData
+def dict_from_yaml(yaml_path, folder_id):
+    yaml_data = yaml.load(open(yaml_path).read())
+    yaml_data['relativePath'] = folder_id
+    yaml_data['type'] = 'yaml'
+    if 'template' in yaml_data:
+        yaml_data['url'] = folder_id + '/'
+        filename = os.path.basename(yaml_path)
+        yaml_data['url'] += os.path.splitext(filename)[0] + '.html'
+    return yaml_data
 
 
-def renderMarkdownFile(sourceDir, filename, newDir, templatesDir, siteData,
-                       folderID):
-    newFilename = os.path.splitext(filename)[0] + '.html'
-    newPath = os.path.join(newDir, newFilename)
-    mdData = dictFromMarkdown(os.path.join(sourceDir, filename), folderID)
-    if 'template' in mdData:
-        jinjaEnv = Environment(loader=FileSystemLoader([templatesDir]))
-        template = jinjaEnv.get_template(mdData['template'])
-        output = template.render(page=mdData, site=siteData)
-        with open(newPath, 'w') as f:
+def render_markdown_file(source_dir, filename, new_dir, templates_dir,
+                         site_data, folder_id):
+    new_filename = os.path.splitext(filename)[0] + '.html'
+    new_path = os.path.join(new_dir, new_filename)
+    md_data = dict_from_markdown(os.path.join(source_dir, filename), folder_id)
+    if 'template' in md_data:
+        jinja_loader = jinja2.FileSystemLoader([templates_dir])
+        jinja_env = jinja2.Environment(loader=jinja_loader)
+        template = jinja_env.get_template(md_data['template'])
+        output = template.render(page=md_data, site=site_data)
+        with open(new_path, 'w') as f:
             f.write(output.encode('utf-8'))
     else:
-        with open(newPath, 'w') as f:
-            f.write(mdData['html'].encode('utf-8'))
-    return newPath
+        with open(new_path, 'w') as f:
+            f.write(md_data['html'].encode('utf-8'))
+    return new_path
 
 
-def renderYamlFile(sourceDir, filename, newDir, templatesDir, siteData,
-                   folderID):
-    newFilename = os.path.splitext(filename)[0] + '.html'
-    newPath = os.path.join(newDir, newFilename)
-    yamlData = dictFromYaml(os.path.join(sourceDir, filename), folderID)
-    if 'template' in yamlData:
-        jinjaEnv = Environment(loader=FileSystemLoader([templatesDir]))
-        template = jinjaEnv.get_template(yamlData['template'])
-        output = template.render(page=yamlData, site=siteData)
-        with open(newPath, 'w') as f:
+def render_yaml_file(source_dir, filename, new_dir, templates_dir, site_data,
+                     folder_id):
+    new_filename = os.path.splitext(filename)[0] + '.html'
+    new_path = os.path.join(new_dir, new_filename)
+    yaml_data = dict_from_yaml(os.path.join(source_dir, filename), folder_id)
+    if 'template' in yaml_data:
+        jinja_loader = jinja2.FileSystemLoader([templates_dir])
+        jinja_env = jinja2.Environment(loader=jinja_loader)
+        template = jinja_env.get_template(yaml_data['template'])
+        output = template.render(page=yaml_data, site=site_data)
+        with open(new_path, 'w') as f:
             f.write(output.encode('utf-8'))
     else:
         return False
-    return newPath
+    return new_path
 
 
-def renderHtmlFile(sourceDir, filename, newDir, templatesDir, siteData,
-                   folderID):
-    newPath = os.path.join(newDir, filename)
-    jinjaFLS = FileSystemLoader([templatesDir, sourceDir])
-    jinjaEnv = Environment(loader=jinjaFLS)
-    template = jinjaEnv.get_template(filename)
-    output = template.render(site=siteData)
-    with open(newPath, 'w') as f:
+def render_html_file(source_dir, filename, new_dir, templates_dir, site_data,
+                     folder_id):
+    new_path = os.path.join(new_dir, filename)
+    jinja_fls = jinja2.FileSystemLoader([templates_dir, source_dir])
+    jinja_env = jinja2.Environment(loader=jinja_fls)
+    template = jinja_env.get_template(filename)
+    output = template.render(site=site_data)
+    with open(new_path, 'w') as f:
         f.write(output.encode('utf-8'))
-    return newPath
+    return new_path
 
 
-def renderSiteFile(sourceDir, filename, outputDir, templatesDir, siteData,
-                   folderID):
+def render_site_file(source_dir, filename, output_dir,
+                     templates_dir, site_data, folder_id):
     extension = os.path.splitext(filename)[1]
-    currentPath = os.path.join(sourceDir, filename)
-    source_length = len(sourceDir) + 1
-    newDir = os.path.join(outputDir, sourceDir[source_length:])
-    if not os.path.exists(newDir):
-        os.makedirs(newDir)
+    current_path = os.path.join(source_dir, filename)
+    source_length = len(source_dir) + 1
+    new_dir = os.path.join(output_dir, source_dir[source_length:])
+    if not os.path.exists(new_dir):
+        os.makedirs(new_dir)
     if extension == '.html':
-        newPath = renderHtmlFile(sourceDir, filename, newDir,
-                                 templatesDir, siteData, folderID)
+        new_path = render_html_file(source_dir, filename, new_dir,
+                                    templates_dir, site_data, folder_id)
     elif extension == '.md':
-        newPath = renderMarkdownFile(sourceDir, filename, newDir,
-                                     templatesDir, siteData, folderID)
+        new_path = render_markdown_file(source_dir, filename, new_dir,
+                                        templates_dir, site_data, folder_id)
     elif extension == '.yaml':
-        newPath = renderYamlFile(sourceDir, filename, newDir,
-                                 templatesDir, siteData, folderID)
+        new_path = render_yaml_file(source_dir, filename, new_dir,
+                                    templates_dir, site_data, folder_id)
     else:
-        newPath = os.path.join(newDir, filename)
-        shutil.copy2(currentPath, newDir)
-    return newPath
+        new_path = os.path.join(new_dir, filename)
+        shutil.copy2(current_path, new_dir)
+    return new_path
 
 
-def renderLessFile(lessFile, outputDir):
-    basename = os.path.basename(lessFile)
-    cssDir = os.path.join(outputDir, 'css')
-    if not os.path.exists(cssDir):
-        os.makedirs(cssDir)
-    cssFile = os.path.splitext(basename)[0] + '.css'
-    outputFile = os.path.join(cssDir, cssFile)
-    subCall = ['lessc', '-x', lessFile, outputFile]
-    subprocess.call(subCall)
-    return outputFile
+def render_less_file(less_file, output_dir):
+    basename = os.path.basename(less_file)
+    css_dir = os.path.join(output_dir, 'css')
+    if not os.path.exists(css_dir):
+        os.makedirs(css_dir)
+    css_file = os.path.splitext(basename)[0] + '.css'
+    output_file = os.path.join(css_dir, css_file)
+    sub_call = ['lessc', '-x', less_file, output_file]
+    subprocess.call(sub_call)
+    return output_file
 
 
-def renderSassFile(sassFile, outputDir):
-    basename = os.path.basename(sassFile)
-    cssDir = os.path.join(outputDir, 'css')
-    if not os.path.exists(cssDir):
-        os.makedirs(cssDir)
-    cssFile = os.path.splitext(basename)[0] + '.css'
-    outputFile = os.path.join(cssDir, cssFile)
-    subCall = ['sass', '--style', 'compressed', sassFile, outputFile]
-    subprocess.call(subCall)
-    return outputFile
+def render_sass_file(sass_file, output_dir):
+    basename = os.path.basename(sass_file)
+    css_dir = os.path.join(output_dir, 'css')
+    if not os.path.exists(css_dir):
+        os.makedirs(css_dir)
+    css_file = os.path.splitext(basename)[0] + '.css'
+    output_file = os.path.join(css_dir, css_file)
+    sub_call = ['sass', '--style', 'compressed', sass_file, output_file]
+    subprocess.call(sub_call)
+    return output_file
 
 
-def deleteFolderContents(folder_path):
+def delete_folder_contents(folder_path):
     for file_object in os.listdir(folder_path):
         file_object_path = os.path.join(folder_path, file_object)
         if os.path.isfile(file_object_path):
@@ -171,16 +173,17 @@ def deleteFolderContents(folder_path):
             shutil.rmtree(file_object_path)
 
 
-def buildStaticSite(sourceDir, outputDir, templatesDir=False, lessFile=False,
-                    sassFile=False, printSiteData=False):
-    deleteFolderContents(outputDir)
-    siteData = populateSiteData(sourceDir)
-    if printSiteData:
-        print json.dumps(siteData, sort_keys=True, indent=4)
-    if not templatesDir:
-        templatesDir = os.path.join(os.path.dirname(sourceDir), 'templates')
-    renderSiteOuput(sourceDir, outputDir, templatesDir, siteData)
-    if lessFile:
-        renderLessFile(lessFile, outputDir)
-    if sassFile:
-        renderSassFile(sassFile, outputDir)
+def build_static_site(source_dir, output_dir, templates_dir=False,
+                      less_file=False, sass_file=False,
+                      print_site_data=False):
+    delete_folder_contents(output_dir)
+    site_data = populate_site_data(source_dir)
+    if print_site_data:
+        print json.dumps(site_data, sort_keys=True, indent=4)
+    if not templates_dir:
+        templates_dir = os.path.join(os.path.dirname(source_dir), 'templates')
+    render_site_ouput(source_dir, output_dir, templates_dir, site_data)
+    if less_file:
+        render_less_file(less_file, output_dir)
+    if sass_file:
+        render_sass_file(sass_file, output_dir)

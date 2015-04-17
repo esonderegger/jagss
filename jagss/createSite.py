@@ -3,53 +3,53 @@
 import os
 
 
-def createNewSite(location, cssType):
+def create_new_site(location, css_type):
     print 'creating new jagss site...'
-    siteName = os.path.split(location)[1]
-    sitePath = os.path.join(location, 'site')
-    outputPath = os.path.join(location, 'staticOutput')
-    templatesPath = os.path.join(location, 'templates')
-    configPath = os.path.join(location, 'config.yaml')
-    dirsToCreate = [sitePath, outputPath, templatesPath]
-    jinjaPath = os.path.join(templatesPath, 'default.html')
-    indexPath = os.path.join(sitePath, 'index.md')
-    if cssType == 'less':
-        lessDirPath = os.path.join(location, 'less')
-        cssFilePath = os.path.join(lessDirPath, siteName + '.less')
-        dirsToCreate.append(lessDirPath)
-    elif cssType == 'sass':
-        sassDirPath = os.path.join(location, 'sass')
-        cssFilePath = os.path.join(sassDirPath, siteName + '.scss')
-        dirsToCreate.append(sassDirPath)
+    site_name = os.path.split(location)[1]
+    site_path = os.path.join(location, 'site')
+    output_path = os.path.join(location, 'staticOutput')
+    templates_path = os.path.join(location, 'templates')
+    config_path = os.path.join(location, 'config.yaml')
+    dirs_to_create = [site_path, output_path, templates_path]
+    jinja_path = os.path.join(templates_path, 'default.html')
+    index_path = os.path.join(site_path, 'index.md')
+    if css_type == 'less':
+        less_dir_path = os.path.join(location, 'less')
+        css_file_path = os.path.join(less_dir_path, site_name + '.less')
+        dirs_to_create.append(less_dir_path)
+    elif css_type == 'sass':
+        sass_dir_path = os.path.join(location, 'sass')
+        css_file_path = os.path.join(sass_dir_path, site_name + '.scss')
+        dirs_to_create.append(sass_dir_path)
     else:
-        cssDirPath = os.path.join(sitePath, 'css')
-        cssFilePath = os.path.join(cssDirPath, siteName + '.css')
-        dirsToCreate.append(cssDirPath)
-    for dirPath in dirsToCreate:
-        if not os.path.exists(dirPath):
-            os.makedirs(dirPath)
-    if not os.path.exists(configPath):
-        createConfigFile(location, cssType)
-    if not os.path.exists(cssFilePath):
-        createCssFile(cssFilePath)
-    if not os.path.exists(jinjaPath):
-        createTemplateFile(jinjaPath, siteName)
-    if not os.path.exists(indexPath):
-        createMarkdownFile(indexPath)
+        css_dir_path = os.path.join(site_path, 'css')
+        css_file_path = os.path.join(css_dir_path, site_name + '.css')
+        dirs_to_create.append(css_dir_path)
+    for dir_path in dirs_to_create:
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+    if not os.path.exists(config_path):
+        create_config_file(location, css_type)
+    if not os.path.exists(css_file_path):
+        create_css_file(css_file_path)
+    if not os.path.exists(jinja_path):
+        create_template_file(jinja_path, site_name)
+    if not os.path.exists(index_path):
+        create_markdown_file(index_path)
 
 
-def createConfigFile(cwd, cssType):
+def create_config_file(cwd, css_type):
     """creates a config.yaml file with default values inside the cwd"""
-    siteName = os.path.split(cwd)[1]
+    site_name = os.path.split(cwd)[1]
     conf = 'sourceDir: site\n'
     conf += 'outputDir: staticOutput\n'
     conf += 'templatesDir: templates\n'
-    if cssType == 'less':
-        conf += 'lessFile: less/' + siteName + '.less\n'
+    if css_type == 'less':
+        conf += 'lessFile: less/' + site_name + '.less\n'
         conf += 'sassFile: False\n'
-    elif cssType == 'sass':
+    elif css_type == 'sass':
         conf += 'lessFile: False\n'
-        conf += 'sassFile: sass/' + siteName + '.scss\n'
+        conf += 'sassFile: sass/' + site_name + '.scss\n'
     else:
         conf += 'lessFile: False\n'
         conf += 'sassFile: False\n'
@@ -65,7 +65,7 @@ def createConfigFile(cwd, cssType):
         f.write(conf.encode('utf-8'))
 
 
-def createCssFile(cssPath):
+def create_css_file(css_path):
     """creates a default css or less file at the specified path."""
     css = """body {
     width: 600px;
@@ -75,11 +75,11 @@ def createCssFile(cssPath):
     color: #eee;
 }
 """
-    with open(cssPath, 'w') as f:
+    with open(css_path, 'w') as f:
         f.write(css.encode('utf-8'))
 
 
-def createTemplateFile(templatePath, siteName):
+def create_template_file(template_path, site_name):
     """creates a default jinja2 template at the specified path."""
     template = """<!DOCTYPE html>
 <html lang="en">
@@ -93,12 +93,12 @@ def createTemplateFile(templatePath, siteName):
         {{ page.html }}
     </body>
 </html>
-""" % (siteName)
-    with open(templatePath, 'w') as f:
+""" % (site_name)
+    with open(template_path, 'w') as f:
         f.write(template.encode('utf-8'))
 
 
-def createMarkdownFile(markdownPath):
+def create_markdown_file(markdown_path):
     """creates a default markdown file at the specified path."""
     md = """template: default.html
 title: JAGSS!
@@ -108,5 +108,5 @@ title: JAGSS!
 This is the default page for a new JAGSS project. Modify the template
 and site files to get started.
 """
-    with open(markdownPath, 'w') as f:
+    with open(markdown_path, 'w') as f:
         f.write(md.encode('utf-8'))

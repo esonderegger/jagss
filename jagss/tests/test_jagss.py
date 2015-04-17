@@ -4,7 +4,7 @@ import jagss
 
 class TestJagss(unittest.TestCase):
     def test_good_md(self):
-        filePath = 'jagss/tests/good_md.md'
+        file_path = 'jagss/tests/good_md.md'
         good_dict = {'url': '/tests/good_md.html',
                      'relativePath': '/tests',
                      'html': """<h1>This is an h1</h1>
@@ -16,11 +16,11 @@ class TestJagss(unittest.TestCase):
 <p>This is a second paragraph.</p>
 """,
                      'type': 'markdown'}
-        test_dict = jagss.dictFromMarkdown(filePath, '/tests')
+        test_dict = jagss.dictFromMarkdown(file_path, '/tests')
         self.assertEqual(good_dict, test_dict)
 
     def test_good_yaml_md(self):
-        filePath = 'jagss/tests/good_yaml_md.md'
+        file_path = 'jagss/tests/good_yaml_md.md'
         good_dict = {'title': 'Test File',
                      'url': '/tests/good_yaml_md.html',
                      'relativePath': '/tests',
@@ -30,16 +30,16 @@ class TestJagss(unittest.TestCase):
 """,
                      'template': 'base.html',
                      'type': 'yaml+markdown'}
-        test_dict = jagss.dictFromMarkdown(filePath, '/tests')
+        test_dict = jagss.dictFromMarkdown(file_path, '/tests')
         self.assertEqual(good_dict, test_dict)
 
     def test_good_yaml(self):
-        filePath = 'jagss/tests/good_yaml.yaml'
+        file_path = 'jagss/tests/good_yaml.yaml'
         good_dict = {'url': '/tests/good_yaml.html',
                      'relativePath': '/tests',
                      'type': 'yaml',
                      'template': 'default.html',
                      'title': 'Test Yaml Data',
                      'key1': 'value 1'}
-        test_dict = jagss.dictFromYaml(filePath, '/tests')
+        test_dict = jagss.dictFromYaml(file_path, '/tests')
         self.assertEqual(good_dict, test_dict)

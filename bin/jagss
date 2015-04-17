@@ -15,11 +15,11 @@ from jagss.sftpsync import Sftp
 from jagss.createSite import createNewSite
 
 
-class jagssServerThread(threading.Thread):
-    def __init__(self, port, outputDir):
+class JagssServerThread(threading.Thread):
+    def __init__(self, port, output_dir):
         threading.Thread.__init__(self)
         self.PORT = port
-        self.outputDir = outputDir
+        self.output_dir = output_dir
         self.Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
         self.httpd = SocketServer.TCPServer(("", self.PORT), self.Handler)
 
@@ -32,19 +32,19 @@ class jagssServerThread(threading.Thread):
         self.httpd.shutdown()
 
 
-class jagss_handler(FileSystemEventHandler):
-    def __init__(self, configDict):
+class JagssHandler(FileSystemEventHandler):
+    def __init__(self, config_dict):
         FileSystemEventHandler.__init__(self)
-        self.configDict = configDict
+        self.config_dict = config_dict
 
     def on_any_event(self, event):
         if not event.src_path.startswith(self.configDict['outputDir']):
             print 'rebuilding static site...'
-            jagss.buildStaticSite(self.configDict['sourceDir'],
-                                  self.configDict['outputDir'],
-                                  self.configDict['templatesDir'],
-                                  self.configDict['lessFile'],
-                                  self.configDict['sassFile'])
+            jagss.build_static_site(self.config_dict['sourceDir'],
+                                    self.config_dict['outputDir'],
+                                    self.config_dict['templatesDir'],
+                                    self.config_dict['lessFile'],
+                                    self.config_dict['sassFile'])
             print 'rebuild complete.\n'
 
 
@@ -67,71 +67,73 @@ def main():
     if args.create:
         createNewSite(os.getcwd(), args.create)
     if args.config:
-        configDict = yaml.load(file(args.config, 'r'))
+        config_dict = yaml.load(file(args.config, 'r'))
     elif 'config.yaml' in os.listdir(os.getcwd()):
-        configFile = file(os.path.join(os.getcwd(), 'config.yaml'), 'r')
-        configDict = yaml.load(configFile)
+        config_file = file(os.path.join(os.getcwd(), 'config.yaml'), 'r')
+        config_dict = yaml.load(config_file)
     else:
-        configDict = False
-    if configDict:
-        if not configDict['sourceDir'].startswith('/'):
-            configDict['sourceDir'] = os.path.join(os.getcwd(),
-                                                   configDict['sourceDir'])
-        if not configDict['outputDir'].startswith('/'):
-            configDict['outputDir'] = os.path.join(os.getcwd(),
-                                                   configDict['outputDir'])
-        if not configDict['templatesDir'].startswith('/'):
-            fullTemplatesDir = os.path.join(os.getcwd(),
-                                            configDict['templatesDir'])
-            configDict['templatesDir'] = fullTemplatesDir
-        if isinstance(configDict['lessFile'], str):
-            if not configDict['lessFile'].startswith('/'):
-                configDict['lessFile'] = os.path.join(os.getcwd(),
-                                                      configDict['lessFile'])
-        if isinstance(configDict['sassFile'], str):
-            if not configDict['sassFile'].startswith('/'):
-                configDict['sassFile'] = os.path.join(os.getcwd(),
-                                                      configDict['sassFile'])
-        jagss.buildStaticSite(configDict['sourceDir'],
-                              configDict['outputDir'],
-                              configDict['templatesDir'],
-                              configDict['lessFile'],
-                              configDict['sassFile'])
+        config_dict = False
+    if config_dict:
+        if not config_dict['sourceDir'].startswith('/'):
+            config_dict['sourceDir'] = os.path.join(os.getcwd(),
+                                                    config_dict['sourceDir'])
+        if not config_dict['outputDir'].startswith('/'):
+            config_dict['outputDir'] = os.path.join(os.getcwd(),
+                                                    config_dict['outputDir'])
+        if not config_dict['templatesDir'].startswith('/'):
+            full_templates_dir = os.path.join(os.getcwd(),
+                                              config_dict['templatesDir'])
+            config_dict['templatesDir'] = full_templates_dir
+        if isinstance(config_dict['lessFile'], str):
+            if not config_dict['lessFile'].startswith('/'):
+                config_dict['lessFile'] = os.path.join(os.getcwd(),
+                                                       config_dict['lessFile'])
+        if isinstance(config_dict['sassFile'], str):
+            if not config_dict['sassFile'].startswith('/'):
+                config_dict['sassFile'] = os.path.join(os.getcwd(),
+                                                       config_dict['sassFile'])
+        jagss.build_static_site(config_dict['sourceDir'],
+                                config_dict['outputDir'],
+                                config_dict['templatesDir'],
+                                config_dict['lessFile'],
+                                config_dict['sassFile'])
     else:
         print 'ERROR: Could not find config.yaml file.'
         return False
     if args.deploy:
         if args.deploy == 'sftp':
-            print 'deploying to sftp site: ' + configDict['sftpAddress']
-            sftpsite = Sftp(configDict['sftpAddress'],
-                            configDict['sftpUsername'],
-                            configDict['sftpPassword'])
-            sftpsite.sync(configDict['outputDir'], configDict['sftpDirectory'],
+            print 'deploying to sftp site: ' + config_dict['sftpAddress']
+            sftpsite = Sftp(config_dict['sftpAddress'],
+                            config_dict['sftpUsername'],
+                            config_dict['sftpPassword'])
+            sftpsite.sync(config_dict['outputDir'],
+                          config_dict['sftpDirectory'],
                           download=False, delete=True)
         if args.deploy == 's3':
-            print 'deplying to s3 bucket: ' + configDict['s3BucketName']
-            commandList = ['boto-rsync', '-a', configDict['s3AccessKey'],
-                           '-s', configDict['s3SecretKey'], '--delete',
-                           configDict['outputDir'] + '/',
-                           's3://' + configDict['s3BucketName'] + '/']
-            subprocess.call(commandList)
+            print 'deplying to s3 bucket: ' + config_dict['s3BucketName']
+            command_list = ['boto-rsync', '-a', config_dict['s3AccessKey'],
+                            '-s', config_dict['s3SecretKey'], '--delete',
+                            config_dict['outputDir'] + '/',
+                            's3://' + config_dict['s3BucketName'] + '/']
+            subprocess.call(command_list)
         if args.deploy == 'git':
             print 'deploying via git not implemented yet'
     if args.server:
-        event_handler = jagss_handler(configDict)
+        event_handler = JagssHandler(config_dict)
         observer = Observer()
-        masterDir = os.path.dirname(configDict['sourceDir'])
-        observer.schedule(event_handler, path=masterDir, recursive=True)
-        portNum = int(args.server)
-        jagssHttpServer = jagssServerThread(portNum, configDict['outputDir'])
+        master_dir = os.path.dirname(config_dict['sourceDir'])
+        observer.schedule(event_handler, path=master_dir, recursive=True)
+        port_num = int(args.server)
+        jagss_http_server = JagssServerThread(port_num,
+                                              config_dict['outputDir'])
         observer.start()
-        jagssHttpServer.start()
+        jagss_http_server.start()
         try:
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
             observer.stop()
-            jagssHttpServer.shutdown()
+            jagss_http_server.shutdown()
             print 'stopping testing server.\n'
         observer.join()
 

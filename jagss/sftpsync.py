@@ -129,9 +129,9 @@ class Sftp(object):
             dst_stat = os.stat(file)
 
         if abs(dst_stat.st_mtime - src_stat.st_mtime) > MTIME_TOLERANCE:
-            debugString = '%s modified time mismatch '
-            debugString += '(source: %s, destination: %s)'
-            logger.debug(debugString,
+            debug_string = '%s modified time mismatch '
+            debug_string += '(source: %s, destination: %s)'
+            logger.debug(debug_string,
                          file, datetime.utcfromtimestamp(src_stat.st_mtime),
                          datetime.utcfromtimestamp(dst_stat.st_mtime))
             return
